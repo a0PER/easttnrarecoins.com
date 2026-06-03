@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us – East Tennessee Rare Coins | Coin Dealer Cleveland TN</title>
+  <meta name="description" content="East Tennessee Rare Coins – reputable coin dealer, coin appraiser, and coin buyer near Cleveland, Chattanooga, and North Georgia. ANA member Bo Mucciarone. By appointment only.">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --dark-bg:    #05060f;
+      --gold-mid:   #c89a10;
+      --gold-pale:  #fff8c0;
+      --text-body:  #aabace;
+      --text-strong:#e0cb80;
+      --text-muted: #5a6a8a;
+    }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      color: var(--text-body);
+      overflow-x: hidden;
+      background: var(--dark-bg);
+    }
+
+    #fixed-bg {
+      position: fixed; inset: 0;
+      background: url('page2backround.png') center / cover no-repeat;
+      background-color: var(--dark-bg);
+      z-index: 0;
+    }
+    #fixed-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 110% 100% at 50% 50%,
+        transparent 38%, rgba(5,6,15,0.45) 70%, rgba(5,6,15,0.80) 100%);
+    }
+
+    /* Particle canvas — full viewport, fixed */
+    #dust-canvas {
+      position: fixed; inset: 0;
+      z-index: 3; pointer-events: none;
+    }
+
+    /* ─── Title ─── */
+    #title-wrap {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 4; text-align: center;
+      width: 90vw; pointer-events: none;
+      opacity: 0;
+      animation: titleFadeIn 1.3s ease 0.5s forwards;
+    }
+    .t-eyebrow {
+      display: block;
+      font-size: clamp(0.52rem, 0.9vw, 0.68rem);
+      letter-spacing: 0.44em; text-transform: uppercase;
+      color: rgba(210,200,180,0.70); margin-bottom: 16px;
+    }
+    .t-line {
+      display: block; line-height: 1.18;
+      margin-bottom: 2px; white-space: nowrap;
+    }
+    /* Individual letter spans — gradient set by JS */
+    .ls {
+      display: inline-block;
+      font-size: clamp(1.55rem, 3.4vw, 2.7rem);
+      font-weight: bold; letter-spacing: 0.05em;
+      will-change: transform, opacity, filter;
+    }
+    .ls-sp {
+      display: inline-block;
+      font-size: clamp(1.55rem, 3.4vw, 2.7rem);
+      width: 0.3em;
+    }
+    .t-tagline {
+      display: block; margin-top: 14px;
+      font-size: clamp(0.62rem, 1.1vw, 0.80rem);
+      letter-spacing: 0.18em; color: rgba(200,216,240,0.52);
+    }
+
+    #hero { position: relative; height: 100vh; z-index: 1; }
+
+    #scroll-caret {
+      position: fixed; bottom: 48px; left: 50%;
+      transform: translateX(-50%); z-index: 5;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 10px;
+      pointer-events: none; opacity: 0;
+      animation: titleFadeIn 1s ease 1.9s forwards;
+      transition: opacity 0.3s;
+    }
+    #scroll-caret span {
+      font-size: 0.58rem; letter-spacing: 0.36em;
+      text-transform: uppercase; color: rgba(200,154,16,0.55);
+    }
+    .caret-arrow {
+      width: 13px; height: 13px;
+      border-right: 1.5px solid rgba(200,154,16,0.55);
+      border-bottom: 1.5px solid rgba(200,154,16,0.55);
+      transform: rotate(45deg);
+      animation: bounceDown 2s ease-in-out infinite;
+    }
+
+    /* ─── Content ─── */
+    #about {
+      position: relative; z-index: 1;
+      background: rgba(5,6,15,0.84);
+      border-top: 1px solid rgba(200,154,16,0.22);
+    }
+    .section-inner { max-width: 960px; margin: 0 auto; padding: 96px 36px 120px; }
+    .section-title {
+      text-align: center; letter-spacing: 0.07em;
+      background: linear-gradient(130deg,
+        #b8860b 0%,#e0c040 28%,#fff8c0 50%,#e0c040 72%,#b8860b 100%);
+      background-size: 300% 100%;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: goldShimmer 12s ease infinite;
+    }
+    .title-lg { font-size: clamp(1.6rem, 3.6vw, 2.7rem); }
+    .gold-rule {
+      width: 60px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-mid), transparent);
+      margin: 18px auto 0;
+    }
+    .body-para {
+      font-size: clamp(0.97rem, 1.8vw, 1.08rem); line-height: 1.96;
+      color: var(--text-body); text-align: center; max-width: 760px; margin: 0 auto;
+    }
+    .body-para strong { color: var(--text-strong); font-weight: normal; }
+    .sep {
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(200,154,16,0.18), transparent);
+      margin: 68px 0;
+    }
+    .sub-label {
+      text-align: center; font-size: clamp(0.65rem, 1.2vw, 0.78rem);
+      letter-spacing: 0.32em; text-transform: uppercase;
+      color: rgba(200,154,16,0.68); margin-bottom: 36px;
+    }
+    .questions-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(192px,1fr));
+      gap: 16px; margin-bottom: 52px;
+    }
+    .q-card {
+      position: relative; background: rgba(5,6,15,0.72);
+      border: 1px solid rgba(200,154,16,0.16); border-radius: 2px;
+      padding: 36px 22px 30px; text-align: center; overflow: hidden;
+      transition: background .4s, border-color .4s, transform .3s; cursor: default;
+    }
+    .q-card::before {
+      content: ''; position: absolute; top: 0; left: -100%;
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,215,0,.55), transparent);
+      transition: left .7s ease;
+    }
+    .q-card:hover { background: rgba(200,154,16,.10); border-color: rgba(200,154,16,.34); transform: translateY(-5px); }
+    .q-card:hover::before { left: 100%; }
+    .q-num  { display: block; font-size: 1.4rem; color: rgba(200,154,16,.32); font-style: italic; margin-bottom: 14px; }
+    .q-text { font-size: clamp(.87rem,1.6vw,1rem); color: #d8c480; font-style: italic; line-height: 1.62; }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s ease, transform .9s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .d1{transition-delay:.12s} .d2{transition-delay:.22s} .d3{transition-delay:.32s}
+
+    @keyframes titleFadeIn {
+      from { opacity:0; transform:translate(-50%,calc(-50% + 12px)); }
+      to   { opacity:1; transform:translate(-50%,-50%); }
+    }
+    @keyframes bounceDown {
+      0%,100%{transform:rotate(45deg) translateY(0);opacity:.55}
+      50%    {transform:rotate(45deg) translateY(7px);opacity:1}
+    }
+    @keyframes goldShimmer {
+      0%,100%{background-position:0% 50%} 50%{background-position:100% 50%}
+    }
+    @media(max-width:600px){
+      .section-inner{padding:72px 22px 90px}
+      .ls,.ls-sp{font-size:clamp(1.2rem,7vw,1.8rem)}
+    }
+  </style>
+</head>
+<body>
+
+  <div id="fixed-bg"></div>
+  <canvas id="dust-canvas"></canvas>
+
+  <div id="title-wrap">
+    <span class="t-eyebrow">Est. Cleveland, Tennessee &nbsp;&middot;&nbsp; ANA Member</span>
+    <div class="t-line" id="tline1"></div>
+    <div class="t-line" id="tline2"></div>
+    <span class="t-tagline">Professional Numismatic Services &nbsp;&middot;&nbsp; By Appointment Only</span>
+  </div>
+
+  <section id="hero"></section>
+
+  <div id="scroll-caret" aria-hidden="true">
+    <span>Scroll</span>
+    <div class="caret-arrow"></div>
+  </div>
+
+  <section id="about">
+    <div class="section-inner">
+
+      <div class="reveal">
+        <h2 class="section-title title-lg">Who We Are</h2>
+        <div class="gold-rule"></div>
+      </div>
+      <div class="reveal" style="margin-top:46px">
+        <p class="body-para">
+          East Tennessee Rare Coins is a Numismatic firm owned and operated by professional Coin Dealer
+          and <strong>ANA member, Bo Mucciarone</strong>. With <strong>over a decade in the field</strong>
+          we cater to our clients on an <strong>appointment only basis</strong> to ensure that we have
+          adequate time for key details and accuracy all while giving personalized attention and privacy
+          to all of our clients. Located out of <strong>Cleveland TN</strong>, we also deal with estates
+          and collections from <strong>Chattanooga, Athens, North Georgia</strong> through Southeast
+          Tennessee and the surrounding areas.
+        </p>
+      </div>
+
+      <div class="sep reveal"></div>
+
+      <div class="reveal">
+        <p class="sub-label">Most of our clients have the same Questions</p>
+        <div class="questions-grid">
+          <div class="q-card reveal"><span class="q-num">I</span><p class="q-text">"What do I have?"</p></div>
+          <div class="q-card reveal d1"><span class="q-num">II</span><p class="q-text">"What is it worth?"</p></div>
+          <div class="q-card reveal d2"><span class="q-num">III</span><p class="q-text">"Who can I trust?"</p></div>
+          <div class="q-card reveal d3"><span class="q-num">IV</span><p class="q-text">"If I sell, how do I know it's a fair price?"</p></div>
+        </div>
+        <div class="reveal">
+          <p class="body-para">
+            <strong>East Tennessee Rare Coins can assist in every single step.</strong> Every Collection
+            we purchase is carefully looked at by a professional that is devoted to the highest ethical
+            standards in the Business. <strong>Honesty, Transparency, and Integrity</strong> are the Core
+            Values at East Tennessee Rare Coins resulting in our past and current clients having the most
+            pleasant experience possible. Our <strong>By Appointment Only</strong> means we have a One on
+            One meeting where we can review every Coin together. You will learn the history, stories, and
+            value of each coin resulting in a fair and honest appraisal. Our
+            <strong>Extensive Network</strong> of connections in the industry gives us the opportunity to
+            give an unbeatable cash offer.
+          </p>
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+
+
+  <script>
+  /* ═══════════════════════════════════════════════════════════
+     1.  BUILD INDIVIDUAL LETTER SPANS
+  ═══════════════════════════════════════════════════════════ */
+  const TITLE_LINES = [
+    { id: 'tline1', text: 'About East Tennessee' },
+    { id: 'tline2', text: 'Rare Coins' }
+  ];
+  const allLetters = [];
+
+  TITLE_LINES.forEach(({ id, text }) => {
+    const container = document.getElementById(id);
+    [...text].forEach(ch => {
+      const s = document.createElement('span');
+      if (ch === ' ') {
+        s.className = 'ls-sp';
+      } else {
+        s.className = 'ls';
+        s.textContent = ch;
+        allLetters.push(s);
+      }
+      container.appendChild(s);
+    });
+  });
+
+
+  /* ═══════════════════════════════════════════════════════════
+     2.  SILVER → GOLD GRADIENT  (per-letter background-clip)
+         Each letter's background-position is offset by its
+         horizontal position so all letters share one sweep.
+  ═══════════════════════════════════════════════════════════ */
+  const GRAD =
+    'linear-gradient(to right,' +
+    '#a8adb2 0%,#c8cdd2 10%,#e2e6e8 22%,' +
+    '#d4c090 36%,#c89a10 50%,' +
+    '#e8c840 68%,#ffd700 82%,#b8860b 100%)';
+
+  function applyGradients() {
+    const wrap  = document.getElementById('title-wrap');
+    const wRect = wrap.getBoundingClientRect();
+    const VW    = wRect.width;
+    allLetters.forEach(el => {
+      const r      = el.getBoundingClientRect();
+      const offset = r.left - wRect.left;
+      el.style.background           = GRAD;
+      el.style.backgroundSize       = VW + 'px 100%';
+      el.style.backgroundPosition   = '-' + offset + 'px 0';
+      el.style.webkitBackgroundClip = 'text';
+      el.style.backgroundClip       = 'text';
+      el.style.webkitTextFillColor  = 'transparent';
+      el.style.color                = 'transparent';
+    });
+  }
+
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(applyGradients);
+  window.addEventListener('resize', applyGradients);
+
+
+  /* ═══════════════════════════════════════════════════════════
+     3.  PIXEL-SAMPLED PARTICLE SYSTEM
+         Each letter is rendered onto an offscreen canvas.
+         Its visible pixels become individual particles.
+         Extra "burst" particles add density around each letter.
+
+         TIMING: full dispersal completes at 72% of one viewport
+         of scroll — so everything is gone well before the
+         content section scrolls into view at 100vh.
+  ═══════════════════════════════════════════════════════════ */
+  const canvas = document.getElementById('dust-canvas');
+  const ctx    = canvas.getContext('2d');
+  let CW = 0, CH = 0;
+  let particles = [];
+
+  /* Per-letter stagger: left-to-right wave + randomness */
+  const letterDelay = allLetters.map((_, i) =>
+    (i / allLetters.length) * 0.28 + Math.random() * 0.12
+  );
+
+  function particleColor(pct) {
+    /* pct = 0..1 horizontal position across viewport */
+    if (pct < 0.30) {
+      const v = 165 + (Math.random() * 70 | 0);
+      return `${v},${v},${v + 8}`;                               /* silver  */
+    }
+    if (pct < 0.56) {
+      return `${195+(Math.random()*50|0)},${162+(Math.random()*35|0)},${42+(Math.random()*40|0)}`; /* champagne */
+    }
+    return `${210+(Math.random()*42|0)},${140+(Math.random()*50|0)},${Math.random()*22|0}`;        /* gold    */
+  }
+
+  function buildParticles() {
+    CW = canvas.width  = window.innerWidth;
+    CH = canvas.height = window.innerHeight;
+    particles = [];
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    allLetters.forEach((el, li) => {
+      const rect = el.getBoundingClientRect();
+      const W = Math.ceil(rect.width);
+      const H = Math.ceil(rect.height);
+      if (W < 2 || H < 2) return;
+
+      /* ── Render the letter onto an offscreen canvas ── */
+      const off   = document.createElement('canvas');
+      off.width   = W * dpr;
+      off.height  = H * dpr;
+      const oc    = off.getContext('2d');
+      oc.scale(dpr, dpr);
+      const fs = parseFloat(window.getComputedStyle(el).fontSize);
+      oc.font          = `bold ${fs}px Georgia, "Times New Roman", serif`;
+      oc.textBaseline  = 'middle';
+      oc.textAlign     = 'center';
+      oc.fillStyle     = '#ffffff';
+      oc.fillText(el.textContent, W / 2, H / 2);
+
+      /* ── Sample every pixel ── */
+      const imgData = oc.getImageData(0, 0, off.width, off.height);
+      const d       = imgData.data;
+      const STEP    = 2;    /* device-pixel step — balances count vs detail */
+      const pct     = (rect.left + rect.width / 2) / CW;
+      const delay   = letterDelay[li];
+
+      for (let py = 0; py < off.height; py += STEP) {
+        for (let px = 0; px < off.width; px += STEP) {
+          const idx = (py * off.width + px) * 4;
+          if (d[idx + 3] < 60) continue;      /* skip transparent */
+
+          const sx = rect.left + px / dpr;
+          const sy = rect.top  + py / dpr;
+
+          /* Velocity: upward fan, wide spread */
+          const angle = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.5;
+          const speed = 70 + Math.random() * 260;
+
+          particles.push({
+            ox: sx, oy: sy,
+            dx: Math.cos(angle) * speed,
+            dy: Math.sin(angle) * speed,
+            r:  Math.random() * 1.6 + 0.3,
+            a:  0.75 + Math.random() * 0.25,
+            delay,
+            col: particleColor(pct)
+          });
+        }
+      }
+
+      /* ── Extra burst cloud (larger, faster, behind shape) ── */
+      for (let k = 0; k < 120; k++) {
+        const angle = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.8;
+        const speed = 120 + Math.random() * 320;
+        particles.push({
+          ox:    rect.left + Math.random() * rect.width,
+          oy:    rect.top  + Math.random() * rect.height,
+          dx:    Math.cos(angle) * speed,
+          dy:    Math.sin(angle) * speed,
+          r:     Math.random() * 2.6 + 0.5,
+          a:     0.55 + Math.random() * 0.45,
+          delay: delay + Math.random() * 0.08,
+          col:   particleColor(pct)
+        });
+      }
+    });
+  }
+
+  /* ── Draw particles at a given progress (0–1) ── */
+  function drawParticles(p) {
+    ctx.clearRect(0, 0, CW, CH);
+    if (p <= 0 || p >= 1) return;
+
+    for (const pt of particles) {
+      const raw = Math.max(0, (p - pt.delay) / (1 - pt.delay));
+      const t   = raw * raw;                        /* ease-in burst   */
+      const a   = pt.a * t * (1 - p * 1.05);       /* fade as it flies */
+      if (a < 0.006) continue;
+
+      ctx.globalAlpha = a;
+      ctx.fillStyle   = `rgb(${pt.col})`;
+      ctx.beginPath();
+      ctx.arc(pt.ox + pt.dx * t, pt.oy + pt.dy * t,
+              Math.max(0.1, pt.r * (1 - t * 0.35)), 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+
+  /* ═══════════════════════════════════════════════════════════
+     4.  PER-LETTER HTML EVAPORATION
+         Letters shrink + blur to nothing.  Faster than the
+         particles so the disintegration looks like the letter
+         IS turning into the dust cloud.
+  ═══════════════════════════════════════════════════════════ */
+  function easeIn4(t) { return t * t * t * t; }
+
+  function evaporate(p) {
+    allLetters.forEach((el, i) => {
+      const delay = letterDelay[i];
+      const raw   = Math.max(0, (p - delay) / (1 - delay));
+      const t     = Math.min(1, raw * 1.6);   /* letters disappear faster than particles */
+      const e     = easeIn4(t);
+
+      el.style.transform = `scale(${Math.max(0.001, 1 - e)})`;
+      el.style.opacity   = String(Math.max(0, 1 - e * 1.3));
+      el.style.filter    = `blur(${e * 9}px)`;
+    });
+
+    /* eyebrow + tagline fade quickly */
+    const ft = easeIn4(Math.min(1, p * 2.2));
+    const ey = document.querySelector('.t-eyebrow');
+    const tg = document.querySelector('.t-tagline');
+    ey.style.opacity    = String(Math.max(0, 1 - ft * 1.4));
+    ey.style.transform  = `translateY(${-ft * 22}px)`;
+    tg.style.opacity    = String(Math.max(0, 1 - ft * 1.4));
+    tg.style.transform  = `translateY(${ft * 18}px)`;
+  }
+
+
+  /* ═══════════════════════════════════════════════════════════
+     5.  SCROLL DRIVER
+         progress = scrollY / (0.72 × vh)
+         → everything fully dispersed by 72% of first viewport,
+           well before the content section appears at 100vh.
+  ═══════════════════════════════════════════════════════════ */
+  const titleWrap = document.getElementById('title-wrap');
+  const caret     = document.getElementById('scroll-caret');
+  let raf = null;
+
+  function onScroll() {
+    /* Map 0→72vh scroll into 0→1 progress */
+    const progress = Math.min(1, window.scrollY / (window.innerHeight * 0.72));
+
+    if (raf) cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      titleWrap.style.visibility = progress >= 1 ? 'hidden' : 'visible';
+      caret.style.opacity = String(Math.max(0, 1 - progress * 9));
+      evaporate(progress);
+      drawParticles(progress);
+    });
+  }
+
+  function init() {
+    buildParticles();
+    applyGradients();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', () => { buildParticles(); applyGradients(); });
+    onScroll();
+  }
+
+  /* Wait for fonts so letter sizes / positions are accurate */
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(init);
+
+
+  /* ═══════════════════════════════════════════════════════════
+     6.  SCROLL-REVEAL for content sections
+  ═══════════════════════════════════════════════════════════ */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  </script>
+
+</body>
+</html>

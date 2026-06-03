@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>East Tennessee Rare Coins</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 100vw;
+      position: relative;
+      user-select: none;
+      background: #05060f;
+      /* scrollable so evaporation can be triggered */
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    /* ── Fixed background photo ── */
+    .bg {
+      position: fixed;
+      inset: 0;
+      background: url('1pagebackround.png') center / cover no-repeat;
+      filter: brightness(0.05) blur(10px);
+      transform: scale(1.06);
+      transition: filter 2.8s ease, transform 2.8s ease;
+      z-index: 0;
+    }
+    body.lamp-on .bg {
+      filter: brightness(0.72) blur(0px);
+      transform: scale(1);
+    }
+
+    /* ── Warm amber lamp glow ── */
+    .lamp-glow {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 80% at 8% 28%,
+          rgba(255,190,55,0.42) 0%, rgba(255,150,10,0.22) 30%,
+          rgba(255,110,0,0.08) 55%, transparent 72%);
+      opacity: 0;
+      transition: opacity 2.8s ease;
+      z-index: 1;
+      pointer-events: none;
+    }
+    body.lamp-on .lamp-glow { opacity: 1; }
+
+    /* ── Dust canvas ── */
+    #dust-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    /* ── Logo ── */
+    .logo-wrap {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-1.2em);
+      z-index: 10;
+      opacity: 0;
+      animation: logoLoad 1.8s ease-out 0.2s forwards;
+      pointer-events: none;
+    }
+    .logo {
+      width: min(420px, 82vw);
+      display: block;
+      filter: invert(1) drop-shadow(0 0 14px rgba(255,255,255,0.50));
+      transition: filter 2.4s ease;
+    }
+    body.lamp-on .logo {
+      filter: invert(1) drop-shadow(0 0 22px rgba(255,212,65,0.76));
+    }
+
+    /* ── Info block (centered, fixed) ── */
+    .info {
+      position: fixed;
+      top: 52%;
+      left: 50%;
+      transform: translate(-50%, -50%) translateY(1em);
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      width: 90%;
+      opacity: 0;
+      animation: infoLoad 2s ease-out 0.9s forwards;
+    }
+
+    .text-line {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: baseline;
+    }
+
+    /* ── Letter spans ─ gradient applied by JS ── */
+    .letter {
+      display: inline-block;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-weight: bold;
+      will-change: transform, opacity, filter;
+      /* gradient set per-letter by JS */
+    }
+    .letter.space {
+      display: inline-block;
+    }
+
+    /* Font sizes per line */
+    .line-0 .letter { font-size: clamp(1.05rem, 2.4vw, 1.65rem); }
+    .line-1 .letter { font-size: clamp(1.9rem,  4.8vw, 3.6rem);  letter-spacing: 0.06em; }
+    .line-2 .letter { font-size: clamp(1.4rem,  3.8vw, 2.9rem);  letter-spacing: 0.10em; }
+    .line-0 .space  { font-size: clamp(1.05rem, 2.4vw, 1.65rem); }
+    .line-1 .space  { font-size: clamp(1.9rem,  4.8vw, 3.6rem); }
+    .line-2 .space  { font-size: clamp(1.4rem,  3.8vw, 2.9rem); }
+
+    /* ── Buttons ── */
+    .btn-row {
+      display: flex;
+      gap: 20px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .btn {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: clamp(0.8rem, 1.8vw, 1rem);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      padding: 0.78em 2.4em;
+      border: 1.5px solid rgba(180,210,247,0.28);
+      background: rgba(8,12,30,0.55);
+      color: #7aaee8;
+      border-radius: 3px;
+      cursor: default;
+      pointer-events: none;
+      transition: border-color 2s ease 0.4s, color 2s ease 0.4s,
+                  background 2s ease 0.4s, box-shadow 2s ease 0.4s;
+    }
+    body.lamp-on .btn {
+      border-color: rgba(255,195,55,0.55);
+      color: #ffd060;
+      background: rgba(255,150,0,0.06);
+      box-shadow: 0 0 14px rgba(255,180,0,0.14);
+    }
+    a.btn {
+      cursor: pointer;
+      pointer-events: auto;
+      text-decoration: none;
+      transition: background 0.35s, color 0.35s, border-color 0.35s, box-shadow 0.35s;
+    }
+    a.btn:hover, body.lamp-on a.btn:hover {
+      background: #c89a10;
+      color: #1a0a00;
+      border-color: #c89a10;
+      box-shadow: none;
+    }
+
+    /* scroll spacer — creates scroll room while all content stays fixed */
+    #scroll-spacer { height: 200vh; }
+
+    /* Keyframes */
+    @keyframes logoLoad {
+      0%   { opacity: 0; transform: translateX(-50%) translateY(-1.2em); }
+      100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+    @keyframes infoLoad {
+      0%   { opacity: 0; transform: translate(-50%, calc(-50% + 1em)); }
+      100% { opacity: 1; transform: translate(-50%, -50%); }
+    }
+  </style>
+</head>
+<body id="page">
+
+  <div class="bg"></div>
+  <div class="lamp-glow"></div>
+  <canvas id="dust-canvas"></canvas>
+
+  <!-- Logo -->
+  <div class="logo-wrap">
+    <img class="logo" src="1pagelogo.png" alt="East Tennessee Rare Coins">
+  </div>
+
+  <!-- Info text + buttons -->
+  <div class="info" id="info">
+    <div class="btn-row">
+      <a class="btn" href="https://www.google.com/maps/dir//1441+Guthrie+Dr+NW,+Cleveland,+TN+37311/@35.178637,-84.89446,15z/data=!4m9!4m8!1m1!4e2!1m5!1m1!1s0x885e2bdc3febf52f:0xd7c367396a1cc821!2m2!1d-84.8814489!2d35.1880144?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener">Directions</a>
+      <div class="btn">What we buy</div>
+    </div>
+  </div>
+
+  <!-- Scroll spacer: gives 200vh of scroll room while fixed content stays visible -->
+  <div id="scroll-spacer"></div>
+
+  <script>
+  /* ════════════════════════════════════════════════════════
+     BUILD LETTER SPANS
+  ════════════════════════════════════════════════════════ */
+  const lines = [
+    "Have a Coin Collection needing to be Evaluated?",
+    "CALL US TODAY!",
+    "423-331-6825"
+  ];
+  const infoEl = document.getElementById('info');
+  const btnRow = infoEl.querySelector('.btn-row');
+  const allLetters = [];
+
+  lines.forEach((line, li) => {
+    const lineEl = document.createElement('div');
+    lineEl.className = `text-line line-${li}`;
+    [...line].forEach(ch => {
+      const span = document.createElement('span');
+      if (ch === ' ') {
+        span.className = 'letter space';
+        span.innerHTML = '&nbsp;';
+      } else {
+        span.className = 'letter';
+        span.textContent = ch;
+        allLetters.push(span);
+      }
+      lineEl.appendChild(span);
+    });
+    infoEl.insertBefore(lineEl, btnRow);
+  });
+
+  /* ════════════════════════════════════════════════════════
+     SILVER → GOLD GRADIENT  (left = silver, right = gold)
+     Each letter gets a background-clip gradient whose
+     background-position is offset to its horizontal position,
+     so all letters together form one continuous sweep.
+  ════════════════════════════════════════════════════════ */
+  const GRADIENT =
+    'linear-gradient(to right,' +
+    ' #a8adb2 0%,'  +   /* silver        */
+    ' #c8cdd2 10%,' +   /* bright silver  */
+    ' #e2e4e6 22%,' +   /* near-white     */
+    ' #d4c090 36%,' +   /* warm champagne */
+    ' #c89a10 50%,' +   /* gold start     */
+    ' #e8c840 68%,' +   /* bright gold    */
+    ' #ffd700 82%,' +   /* pure gold      */
+    ' #b8860b 100%)';   /* deep gold      */
+
+  function applyGradients() {
+    const VW = window.innerWidth;
+    allLetters.forEach(el => {
+      const r      = el.getBoundingClientRect();
+      const offset = r.left + r.width / 2;        /* letter center x */
+
+      el.style.background            = GRADIENT;
+      el.style.backgroundSize        = VW + 'px 100%';
+      el.style.backgroundPosition    = -offset + r.width / 2 + 'px 0';
+      el.style.webkitBackgroundClip  = 'text';
+      el.style.backgroundClip        = 'text';
+      el.style.webkitTextFillColor   = 'transparent';
+      el.style.color                 = 'transparent';
+    });
+  }
+
+  /* ════════════════════════════════════════════════════════
+     LAMP-ON  (triggers after 1.8s, exactly as before)
+  ════════════════════════════════════════════════════════ */
+  setTimeout(() => {
+    document.getElementById('page').classList.add('lamp-on');
+    /* Re-apply gradients after font/layout settle */
+    setTimeout(applyGradients, 200);
+  }, 1800);
+
+  /* Apply gradient once fonts are ready */
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(applyGradients);
+  } else {
+    window.addEventListener('load', applyGradients);
+  }
+  window.addEventListener('resize', applyGradients);
+
+  /* ════════════════════════════════════════════════════════
+     MOUSE PROXIMITY LIFT
+  ════════════════════════════════════════════════════════ */
+  document.addEventListener('mousemove', e => {
+    const mx = e.clientX, my = e.clientY;
+    allLetters.forEach(l => {
+      const r    = l.getBoundingClientRect();
+      const dist = Math.hypot(mx - (r.left + r.width/2), my - (r.top + r.height/2));
+      if (dist < 90) {
+        const s = 1 - dist / 90;
+        l.style.transform = `translateY(${-(s * 10)}px) scale(${1 + s * 0.22})`;
+      } else {
+        /* only reset transform if not being evaporated */
+        if (!l.dataset.evaporating) l.style.transform = '';
+      }
+    });
+  });
+
+  /* ════════════════════════════════════════════════════════
+     DUST SPECK CANVAS
+  ════════════════════════════════════════════════════════ */
+  const canvas = document.getElementById('dust-canvas');
+  const ctx    = canvas.getContext('2d');
+  let   CW = 0, CH = 0, specks = [];
+
+  /* Pre-computed evaporation data per letter */
+  const evap = allLetters.map(() => ({
+    delay: Math.random() * 0.45,
+    dx:    (Math.random() - 0.5) * 55,
+    dy:    -(Math.random() * 50 + 20),
+    blur:  6 + Math.random() * 6
+  }));
+
+  function buildSpecks() {
+    CW = canvas.width  = window.innerWidth;
+    CH = canvas.height = window.innerHeight;
+    specks = [];
+
+    allLetters.forEach((el, i) => {
+      const r   = el.getBoundingClientRect();
+      const cx  = r.left + r.width  / 2;
+      const cy  = r.top  + r.height / 2;
+      const pct = cx / CW;
+
+      for (let k = 0; k < 10; k++) {
+        const angle = (Math.random() - 0.5) * Math.PI;
+        const speed = 60 + Math.random() * 160;
+        /* Silver left, gold right */
+        const col = pct < 0.35
+          ? `${185+(Math.random()*30|0)},${188+(Math.random()*30|0)},${195+(Math.random()*28|0)}`
+          : pct < 0.62
+          ? `${210+(Math.random()*30|0)},${175+(Math.random()*20|0)},${50+(Math.random()*40|0)}`
+          : `${210+(Math.random()*40|0)},${155+(Math.random()*30|0)},${5+(Math.random()*20|0)}`;
+
+        specks.push({
+          ox: cx + (Math.random()-0.5) * r.width,
+          oy: cy + (Math.random()-0.5) * r.height,
+          dx: Math.cos(angle) * speed * 0.7,
+          dy: -Math.abs(Math.sin(angle)) * speed - 25,
+          r:  Math.random() * 1.6 + 0.3,
+          alpha: Math.random() * 0.85 + 0.15,
+          delay: evap[i].delay + Math.random() * 0.12,
+          col
+        });
+      }
+    });
+  }
+
+  function drawSpecks(progress) {
+    ctx.clearRect(0, 0, CW, CH);
+    if (progress <= 0 || progress >= 1) return;
+
+    for (const s of specks) {
+      const raw = Math.max(0, (progress - s.delay) / (1 - s.delay));
+      const t   = raw * raw;
+      const a   = s.alpha * t * (1 - progress * 0.95);
+      if (a < 0.008) continue;
+
+      ctx.globalAlpha = a;
+      ctx.fillStyle   = `rgb(${s.col})`;
+      ctx.beginPath();
+      ctx.arc(s.ox + s.dx * t, s.oy + s.dy * t, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  /* ════════════════════════════════════════════════════════
+     SCROLL  → EVAPORATE LETTERS + DRAW SPECKS
+  ════════════════════════════════════════════════════════ */
+  function easeIn3(t) { return t * t * t; }
+  let raf = null;
+
+  function onScroll() {
+    /* Evaporation happens over the first 100vh of scroll */
+    const progress = Math.min(1, window.scrollY / window.innerHeight);
+
+    if (raf) cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+
+      allLetters.forEach((el, i) => {
+        const e   = evap[i];
+        const raw = Math.max(0, (progress - e.delay) / (1 - e.delay));
+        const t   = easeIn3(Math.min(1, raw * 1.25));
+
+        if (t > 0) {
+          el.dataset.evaporating = '1';
+          el.style.transform = `translate(${e.dx * t}px, ${e.dy * t}px) scale(${Math.max(0.001, 1 - t)})`;
+          el.style.opacity   = String(Math.max(0, 1 - t * 1.15));
+          el.style.filter    = `blur(${e.blur * t}px)`;
+        } else {
+          delete el.dataset.evaporating;
+        }
+      });
+
+      /* Also fade buttons */
+      btnRow.style.opacity  = String(Math.max(0, 1 - progress * 3));
+
+      drawSpecks(progress);
+    });
+  }
+
+  /* ════════════════════════════════════════════════════════
+     INIT
+  ════════════════════════════════════════════════════════ */
+  function init() {
+    buildSpecks();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', () => {
+      buildSpecks();
+      applyGradients();
+    });
+  }
+
+  if (document.readyState === 'complete') init();
+  else window.addEventListener('load', init);
+  </script>
+</body>
+</html>
