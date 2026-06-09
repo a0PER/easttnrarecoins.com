@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>East Tennessee Rare Coins — Expert Coin Buyers | Cleveland TN</title>
+  <meta name="description" content="East Tennessee Rare Coins — ANA member Bo Mucciarone. Expert coin buyer, appraiser and dealer in Cleveland TN. By appointment only. 423-331-6825.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Orbitron:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --gold:      #C9A84C;
+    --gold-warm: #E8C840;
+    --gold-mid:  #c89a10;
+    --dark:      #05060f;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Cormorant Garamond', serif; background: var(--dark); color: #aabace; overflow-x: hidden; }
+
+  /* ══ HEADER ══════════════════════════════════════════════ */
+  .site-header {
+    position: sticky; top: 0; z-index: 400;
+    height: 88px; background: #fff;
+    border-bottom: 1px solid rgba(0,0,0,0.10);
+    display: flex; align-items: center; justify-content: flex-end;
+    padding: 0 48px;
+    box-shadow: 0 2px 18px rgba(0,0,0,0.08);
+  }
+  /* Both logos sit at the same top-right position; only one is visible at a time */
+  .header-logo {
+    position: absolute;
+    left: 48px; top: 50%; transform: translateY(-50%);
+    cursor: pointer;
+    transition: opacity 0.45s ease;
+  }
+  .logo-p1   { opacity: 1; pointer-events: auto; }
+  .logo-main { opacity: 0; pointer-events: none; }
+  .site-header.scrolled .logo-p1   { opacity: 0; pointer-events: none; }
+  .site-header.scrolled .logo-main { opacity: 1; pointer-events: auto; }
+  .header-right { display: flex; align-items: center; gap: 12px; }
+
+  .btn-call {
+    font-family: 'Cinzel', serif; font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 0.72em 1.8em; background: var(--gold); border: 2px solid var(--gold);
+    color: #050300; text-decoration: none; border-radius: 2px;
+    transition: background 0.22s, color 0.22s, box-shadow 0.22s;
+  }
+  .btn-call:hover { background: transparent; color: var(--gold); box-shadow: 0 0 0 2px var(--gold); }
+
+  .btn-dir {
+    font-family: 'Cinzel', serif; font-size: 0.70rem; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 0.72em 1.8em; background: #1a1410; border: 1.5px solid #1a1410;
+    color: #fff; text-decoration: none; border-radius: 2px;
+    transition: background 0.22s, color 0.22s;
+  }
+  .btn-dir:hover { background: var(--gold); border-color: var(--gold); color: #050300; }
+
+  .btn-menu {
+    font-family: 'Cinzel', serif; font-size: 0.68rem; font-weight: 600;
+    letter-spacing: 0.28em; text-transform: uppercase;
+    padding: 0.72em 1.5em;
+    background: rgba(5,6,15,0.06); border: 1.5px solid rgba(5,6,15,0.20);
+    color: #1a1410; border-radius: 2px; cursor: pointer;
+    transition: background 0.22s, border-color 0.22s, color 0.22s;
+  }
+  .btn-menu:hover, .btn-menu.open { background: rgba(201,168,76,0.12); border-color: var(--gold); color: var(--gold-mid); }
+
+  /* ══ MENU DROPDOWN ════════════════════════════════════════ */
+  #menu-drop {
+    position: fixed; top: 96px; right: 48px; z-index: 500;
+    background: rgba(5,6,15,0.97); border: 1px solid rgba(200,154,16,0.28);
+    border-radius: 3px; min-width: 220px; backdrop-filter: blur(14px);
+    opacity: 0; pointer-events: none;
+    transform: translateY(-8px) scale(0.97);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+  }
+  #menu-drop.open { opacity: 1; pointer-events: auto; transform: none; }
+  .menu-item {
+    display: block; width: 100%; padding: 16px 26px;
+    font-family: 'Cinzel', serif; font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.26em; text-transform: uppercase;
+    color: #d8c480; background: none; border: none;
+    border-bottom: 1px solid rgba(200,154,16,0.10);
+    cursor: pointer; text-align: left;
+    transition: background 0.2s, color 0.2s;
+  }
+  .menu-item:last-child { border-bottom: none; }
+  .menu-item:hover { background: rgba(200,154,16,0.12); color: #ffd060; }
+
+  /* ══ OVERLAY VIEWS ════════════════════════════════════════ */
+  .overlay-view {
+    position: fixed; inset: 0; z-index: 300;
+    background: var(--dark); overflow: hidden;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.32s ease;
+  }
+  .overlay-view.active { opacity: 1; pointer-events: auto; }
+
+  .overlay-close {
+    position: absolute; top: 22px; right: 28px; z-index: 10;
+    font-family: 'Cinzel', serif; font-size: 0.62rem; font-weight: 600;
+    letter-spacing: 0.30em; text-transform: uppercase;
+    padding: 0.62em 1.4em;
+    background: rgba(5,6,15,0.80); border: 1px solid rgba(200,154,16,0.35);
+    color: #d8c480; border-radius: 2px; cursor: pointer;
+    transition: background 0.22s, color 0.22s;
+  }
+  .overlay-close:hover { background: rgba(200,154,16,0.15); color: #ffd060; }
+
+  /* ══ S1 — COIN CAROUSEL ═══════════════════════════════════ */
+  @keyframes scrollLeft {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .carousel-section {
+    background: #000; height: 420px; overflow: hidden; user-select: none;
+  }
+  .carousel-track {
+    display: flex; height: 100%; width: max-content;
+    animation: scrollLeft 100s linear infinite;
+  }
+  .carousel-item { height: 100%; flex-shrink: 0; }
+  .carousel-item img { height: 100%; width: auto; display: block; object-fit: contain; }
+
+  /* ══ S2 — DIME CONTACT SECTION ════════════════════════════ */
+  #s2 {
+    position: relative; min-height: 100vh;
+    display: flex; align-items: center; overflow: hidden;
+  }
+  #s2 .bg-after, #s2 .bg-before {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; object-position: center; display: block;
+  }
+  #s2 .bg-after  { z-index: 0; }
+  #s2 .bg-before { z-index: 1; }
+  #s2 .bg-before.animate { animation: bgFadeOut 5s ease-in-out 2s forwards; }
+  @keyframes bgFadeOut { 0%{opacity:1} 100%{opacity:0} }
+  #s2 .flash-el { display: none; }
+  #s2 .shade {
+    position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    background: linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.15) 75%, transparent);
+  }
+  .dime-content {
+    position: relative; z-index: 3; padding: 80px 60px 80px 80px;
+    max-width: 680px; display: flex; flex-direction: column; gap: 14px;
+  }
+  .dime-headline {
+    font-family: 'Orbitron', sans-serif; font-weight: 900;
+    font-size: clamp(2.8rem, 6.5vw, 6.2rem); letter-spacing: 0.07em;
+    text-transform: uppercase; line-height: 1.0; color: #ffffff;
+    text-shadow: 0 4px 40px rgba(0,0,0,0.95);
+  }
+  .dime-phone {
+    font-family: 'Orbitron', sans-serif; font-weight: 800;
+    font-size: clamp(1.8rem, 4.0vw, 3.8rem); letter-spacing: 0.10em;
+    color: var(--gold-warm);
+    text-shadow: 0 2px 20px rgba(0,0,0,0.85), 0 0 40px rgba(232,200,64,0.4);
+  }
+  .dime-rule { width: 80px; height: 2px; background: linear-gradient(to right, var(--gold), transparent); }
+  .dime-q {
+    font-family: 'Orbitron', sans-serif; font-weight: 700;
+    font-size: clamp(1.1rem, 2.4vw, 2.0rem); letter-spacing: 0.04em;
+    color: #ffffff; line-height: 1.5; text-shadow: 0 2px 14px rgba(0,0,0,0.85);
+  }
+  .dime-tag {
+    font-family: 'Orbitron', sans-serif; font-weight: 500;
+    font-size: clamp(0.90rem, 1.8vw, 1.5rem); letter-spacing: 0.03em;
+    color: #ffffff; line-height: 1.7; text-shadow: 0 1px 10px rgba(0,0,0,0.75);
+  }
+  .dime-appt {
+    font-family: 'Orbitron', sans-serif; font-weight: 700;
+    font-size: clamp(1.0rem, 1.9vw, 1.6rem); letter-spacing: 0.14em;
+    color: #ffffff; text-shadow: 0 2px 20px rgba(0,0,0,0.80);
+  }
+  .dime-btns { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px; }
+  .d-btn {
+    font-family: 'Cinzel', serif; font-size: 0.70rem; font-weight: 600;
+    letter-spacing: 0.20em; text-transform: uppercase;
+    padding: 0.85em 2.4em; border: 1.5px solid var(--gold);
+    background: transparent; color: var(--gold); border-radius: 2px;
+    text-decoration: none; display: inline-block; cursor: pointer;
+    transition: background 0.22s, color 0.22s, box-shadow 0.22s;
+  }
+  .d-btn:hover { background: var(--gold); color: #050300; box-shadow: 0 4px 22px rgba(201,168,76,0.40); }
+  .d-btn-ghost { border-color: rgba(255,255,255,0.38); color: rgba(255,255,255,0.78); }
+  .d-btn-ghost:hover { background: rgba(255,255,255,0.12); color: #fff; border-color: rgba(255,255,255,0.70); box-shadow: none; }
+
+  /* ══ S3 — ABOUT (PAGE 2) ══════════════════════════════════ */
+  #s3 { position: relative; }
+  .section-hero {
+    position: sticky; top: 0; height: 100vh; overflow: hidden; z-index: 0;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .section-hero-bg {
+    position: absolute; inset: 0; background-size: cover; background-position: center;
+  }
+  .section-hero-bg::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(rgba(5,6,15,0.62), rgba(5,6,15,0.62)),
+      radial-gradient(ellipse 110% 100% at 50% 50%, transparent 38%, rgba(5,6,15,0.35) 70%, rgba(5,6,15,0.65) 100%);
+  }
+  .section-hero-text {
+    position: relative; z-index: 2; text-align: center; padding: 0 40px;
+    animation: heroFadeIn 1.2s ease 0.3s both;
+  }
+  @keyframes heroFadeIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif; font-size: 0.68rem; letter-spacing: 0.44em;
+    text-transform: uppercase; color: rgba(255,255,255,0.82); margin-bottom: 18px; display: block;
+  }
+  .hero-title {
+    font-family: 'Cinzel', serif; font-weight: 700;
+    font-size: clamp(1.8rem, 4vw, 3.2rem); letter-spacing: 0.06em;
+    background: linear-gradient(130deg, #b8860b 0%, #e0c040 28%, #fff8c0 50%, #e0c040 72%, #b8860b 100%);
+    background-size: 300% 100%;
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    animation: goldShimmer 12s ease infinite;
+    line-height: 1.2;
+  }
+  .hero-tagline {
+    display: block; margin-top: 14px;
+    font-size: 0.80rem; letter-spacing: 0.18em; color: rgba(255,255,255,0.72);
+  }
+  .scroll-caret-wrap {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 8px;
+    animation: heroFadeIn 1s ease 1.8s both;
+  }
+  .scroll-caret-wrap span { font-size: 0.55rem; letter-spacing: 0.38em; text-transform: uppercase; color: rgba(200,154,16,0.55); }
+  .caret-arr { width: 12px; height: 12px; border-right: 1.5px solid rgba(200,154,16,0.55); border-bottom: 1.5px solid rgba(200,154,16,0.55); transform: rotate(45deg); animation: bounceD 2s ease-in-out infinite; }
+  @keyframes bounceD { 0%,100%{transform:rotate(45deg) translateY(0);opacity:.55} 50%{transform:rotate(45deg) translateY(7px);opacity:1} }
+
+  .section-content {
+    position: relative; z-index: 1;
+    background: rgba(5,6,15,0.92);
+    border-top: 1px solid rgba(200,154,16,0.20);
+  }
+  .section-inner { max-width: 1000px; margin: 0 auto; padding: 110px 48px 140px; }
+  .s-title {
+    text-align: center; font-family: 'Cinzel', serif; font-weight: 700;
+    font-size: clamp(2.6rem, 5.5vw, 4.8rem); letter-spacing: 0.09em;
+    background: linear-gradient(130deg, #b8860b 0%, #e0c040 28%, #fff8c0 50%, #e0c040 72%, #b8860b 100%);
+    background-size: 300% 100%;
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    animation: goldShimmer 12s ease infinite;
+  }
+  .s-rule { width: 90px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold-mid), transparent); margin: 22px auto 0; }
+  .body-para {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.30rem, 2.8vw, 1.70rem); line-height: 2.0; font-weight: 600;
+    color: #ffffff; text-align: center; max-width: 820px; margin: 0 auto;
+    text-shadow: 0 1px 14px rgba(0,0,0,0.55);
+  }
+  .body-para strong { color: #ffd060; font-weight: 700; }
+  .sep { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(200,154,16,0.18), transparent); margin: 68px 0; }
+  .sub-label {
+    text-align: center; font-family: 'Cinzel', serif;
+    font-size: clamp(0.58rem, 1vw, 0.70rem); letter-spacing: 0.38em; text-transform: uppercase;
+    color: rgba(200,154,16,0.68); margin-bottom: 36px;
+  }
+  .q-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 52px; }
+  .q-card {
+    background: rgba(5,6,15,0.72); border: 1px solid rgba(200,154,16,0.16);
+    border-radius: 3px; padding: 36px 22px 30px; text-align: center;
+    transition: background 0.4s, border-color 0.4s, transform 0.3s;
+  }
+  .q-card:hover { background: rgba(200,154,16,0.08); border-color: rgba(200,154,16,0.34); transform: translateY(-5px); }
+  .q-num { display: block; font-size: 1.3rem; color: rgba(200,154,16,0.32); font-style: italic; margin-bottom: 14px; }
+  .q-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; font-weight: 600; color: #ffffff; line-height: 1.62; }
+
+  /* ══ S4 — CONTACT (PAGE 3) ════════════════════════════════ */
+  #s4 { position: relative; }
+
+  /* White panel with gold side stripes */
+  #s4 .section-content {
+    background: #ffffff;
+    border-left:  8px solid var(--gold);
+    border-right: 8px solid var(--gold);
+  }
+  #s4 .body-para        { color: #1a1410; text-shadow: none; }
+  #s4 .body-para strong { color: var(--gold-mid); }
+  #s4 .sub-label        { color: var(--gold-mid); }
+  #s4 .sep { background: linear-gradient(90deg, transparent, rgba(160,120,10,0.45), transparent); }
+
+  /* Contact list — no boxes */
+  .contact-list { max-width: 700px; margin: 0 auto; }
+  .contact-row  { padding: 40px 0; text-align: center; }
+  .contact-clabel {
+    display: block; font-family: 'Cinzel', serif;
+    font-size: 0.58rem; letter-spacing: 0.52em; text-transform: uppercase;
+    color: var(--gold-mid); margin-bottom: 16px;
+  }
+  .contact-cval {
+    display: block; font-family: 'Cinzel', serif; font-weight: 700;
+    font-size: clamp(1.5rem, 3.4vw, 2.8rem); color: #1a1410;
+    line-height: 1.3; text-decoration: none;
+    transition: color 0.25s;
+  }
+  a.contact-cval:hover { color: var(--gold-mid); }
+  .contact-cdiv {
+    display: flex; align-items: center; gap: 20px;
+  }
+  .contact-cdiv::before,
+  .contact-cdiv::after {
+    content: ''; flex: 1; height: 1.5px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .contact-cdiv-gem { color: var(--gold); font-size: 1rem; flex-shrink: 0; }
+
+  /* Appointment button — dark on white */
+  .appt-cta { text-align: center; }
+  .btn-appt {
+    font-family: 'Cinzel', serif; font-size: clamp(0.82rem, 1.5vw, 1.0rem);
+    letter-spacing: 0.24em; text-transform: uppercase;
+    padding: 1.1em 3.6em; background: #ffffff;
+    border: 2px solid var(--gold); color: #1a1410;
+    border-radius: 2px; cursor: pointer;
+    transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+  }
+  .btn-appt:hover {
+    background: var(--gold); border-color: var(--gold); color: #100800;
+    box-shadow: 0 6px 32px rgba(200,154,16,0.38);
+  }
+
+  /* ══ WHAT WE BUY — SHOWCASE ════════════════════════════════ */
+  #view-buying { overflow: hidden; background: #f8f6f1; }
+
+  .wwb-topbar {
+    position: absolute; top: 0; left: 0; right: 0; z-index: 20;
+    height: 82px; background: #ffffff;
+    border-bottom: 4px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 36px;
+  }
+  .wwb-topbar-back {
+    position: absolute; left: 36px;
+    font-family: 'Cinzel', serif; font-size: 0.66rem; font-weight: 600;
+    letter-spacing: 0.24em; text-transform: uppercase;
+    background: none; border: 1.5px solid var(--gold); color: var(--gold-mid);
+    padding: 0.55em 1.4em; border-radius: 2px; cursor: pointer;
+    transition: background 0.22s, color 0.22s, border-color 0.22s;
+  }
+  .wwb-topbar-back:hover { background: var(--gold); border-color: var(--gold); color: #100800; }
+  .wwb-topbar-logo { height: 54px; width: auto; cursor: pointer; }
+
+  .wwb-scroll {
+    position: absolute; top: 82px; left: 0; right: 0; bottom: 0;
+    overflow-y: auto; overflow-x: hidden;
+    scrollbar-width: thin; scrollbar-color: var(--gold) transparent;
+  }
+
+  .wwb-item {
+    max-width: 1060px; margin: 0 auto;
+    padding: 80px 48px;
+    text-align: center;
+  }
+  .wwb-img-frame {
+    margin: 0 auto 52px;
+    background: #ffffff;
+    padding: 14px;
+    border: 1px solid rgba(200,154,16,0.22);
+  }
+  .wwb-img-frame img { width: 100%; height: auto; display: block; }
+  .wwb-item-num {
+    font-family: 'Cinzel', serif; font-size: 0.60rem; letter-spacing: 0.50em;
+    text-transform: uppercase; color: var(--gold-mid); margin-bottom: 16px;
+  }
+  .wwb-item-title {
+    font-family: 'Cinzel', serif; font-weight: 700;
+    font-size: clamp(2.2rem, 5vw, 4.4rem); letter-spacing: 0.07em;
+    color: #1a1410; line-height: 1.1; margin-bottom: 26px;
+  }
+  .wwb-item-rule {
+    width: 90px; height: 3px; margin: 0 auto 36px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .wwb-item-desc {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.30rem, 2.6vw, 1.70rem); font-weight: 500;
+    color: #2a2420; line-height: 1.90; max-width: 740px; margin: 0 auto 40px;
+  }
+  .wwb-item-cta {
+    display: inline-block; font-family: 'Cinzel', serif;
+    font-size: 0.76rem; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase;
+    padding: 1.0em 3.0em; background: #1a1410;
+    border: 2px solid #1a1410; color: #ffffff;
+    text-decoration: none; border-radius: 2px;
+    transition: background 0.25s, border-color 0.25s, color 0.25s, box-shadow 0.25s;
+  }
+  .wwb-item-cta:hover { background: var(--gold); border-color: var(--gold); color: #100800; box-shadow: 0 4px 24px rgba(200,154,16,0.35); }
+  .wwb-sep {
+    max-width: 560px; height: 2px; margin: 0 auto;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* ══ SCHEDULE VIEW ════════════════════════════════════════ */
+  #view-schedule { overflow-y: auto; }
+  .sched-inner { max-width: 960px; margin: 0 auto; padding: 100px 36px 120px; }
+  .shows-list { display: flex; flex-direction: column; gap: 16px; margin-top: 44px; }
+  .show-card {
+    background: rgba(5,6,15,0.75); border: 1px solid rgba(200,154,16,0.16);
+    border-radius: 3px; padding: 28px 32px;
+    display: grid; grid-template-columns: auto 1fr auto;
+    align-items: center; gap: 24px 32px;
+    transition: background 0.4s, border-color 0.4s, transform 0.28s;
+  }
+  .show-card:hover { background: rgba(200,154,16,0.07); border-color: rgba(200,154,16,0.32); transform: translateY(-3px); }
+  .show-card.past { opacity: 0.50; }
+  .show-card.past:hover { opacity: 0.68; transform: none; }
+  .show-date { display: flex; flex-direction: column; align-items: center; padding-right: 28px; border-right: 1px solid rgba(200,154,16,0.14); min-width: 64px; }
+  .show-mon { font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.34em; text-transform:uppercase; color:rgba(200,154,16,0.65); margin-bottom:4px; }
+  .show-day { font-family:'Cinzel',serif; font-size:clamp(1.6rem,3vw,2.2rem); font-weight:700; color:#d8c480; line-height:1; }
+  .show-yr  { font-size:0.58rem; letter-spacing:0.22em; color:#5a6a8a; margin-top:4px; }
+  .show-name { font-family:'Cinzel',serif; font-size:clamp(0.88rem,1.7vw,1.08rem); color:#d8c480; letter-spacing:0.04em; margin-bottom:8px; }
+  .show-meta { font-family:'Cormorant Garamond',serif; font-size:1.0rem; color:#aabace; }
+  .badge {
+    font-family:'Cinzel',serif; font-size:0.58rem; letter-spacing:0.28em;
+    text-transform:uppercase; padding:5px 12px; border-radius:2px; white-space:nowrap;
+  }
+  .badge-next     { background:rgba(200,154,16,0.20); border:1px solid rgba(200,154,16,0.55); color:#ffd060; }
+  .badge-upcoming { background:rgba(200,154,16,0.10); border:1px solid rgba(200,154,16,0.30); color:rgba(200,154,16,0.85); }
+  .badge-past     { background:rgba(90,106,138,0.08); border:1px solid rgba(90,106,138,0.22); color:#5a6a8a; }
+
+  /* ══ APPOINTMENT MODAL ════════════════════════════════════ */
+  #appt-modal {
+    position: fixed; inset: 0; z-index: 600;
+    background: rgba(5,6,15,0.88); backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+    opacity: 0; pointer-events: none; transition: opacity 0.35s ease;
+  }
+  #appt-modal.open { opacity: 1; pointer-events: auto; }
+  .modal-box {
+    position: relative; background: #070a18;
+    border: 1px solid rgba(200,154,16,0.28); border-radius: 3px;
+    padding: 52px 44px 44px; width: min(580px,100%); max-height: 90vh; overflow-y: auto;
+    transform: translateY(18px) scale(0.99); transition: transform 0.38s ease;
+  }
+  #appt-modal.open .modal-box { transform: translateY(0) scale(1); }
+  .modal-close-btn {
+    position: absolute; top: 18px; right: 20px; background: none; border: none;
+    cursor: pointer; color: #5a6a8a; font-size: 1.5rem; line-height: 1;
+    transition: color 0.25s; padding: 4px 8px;
+  }
+  .modal-close-btn:hover { color: #d8c480; }
+  .modal-title {
+    text-align: center; margin-bottom: 6px; font-family: 'Cinzel', serif;
+    font-size: clamp(1.2rem, 2.4vw, 1.7rem); letter-spacing: 0.05em;
+    background: linear-gradient(130deg, #b8860b 0%, #e0c040 28%, #fff8c0 50%, #e0c040 72%, #b8860b 100%);
+    background-size: 300% 100%; -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; animation: goldShimmer 12s ease infinite;
+  }
+  .modal-sub { text-align: center; margin-bottom: 34px; font-size: 0.66rem; letter-spacing: 0.34em; text-transform: uppercase; color: rgba(200,154,16,0.52); }
+  .modal-rule { width: 50px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold-mid), transparent); margin: 0 auto 34px; }
+  .field-row { margin-bottom: 22px; }
+  .field-row label { display: block; margin-bottom: 8px; font-size: 0.66rem; letter-spacing: 0.30em; text-transform: uppercase; color: #5a6a8a; }
+  .field-row label .req { color: rgba(200,154,16,0.75); margin-left: 3px; }
+  .field-row input[type="text"],
+  .field-row input[type="email"],
+  .field-row input[type="date"],
+  .field-row textarea {
+    width: 100%; padding: 13px 16px; background: rgba(5,6,15,0.88);
+    border: 1px solid rgba(200,154,16,0.18); border-radius: 2px;
+    color: #aabace; font-family: 'Cormorant Garamond', serif; font-size: 1rem;
+    outline: none; transition: border-color 0.3s, box-shadow 0.3s;
+    -webkit-appearance: none; appearance: none;
+  }
+  .field-row input:focus, .field-row textarea:focus { border-color: rgba(200,154,16,0.5); box-shadow: 0 0 0 3px rgba(200,154,16,0.07); }
+  .field-row input::placeholder, .field-row textarea::placeholder { color: rgba(90,106,138,0.6); }
+  .field-row textarea { resize: vertical; min-height: 120px; }
+  .field-row input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(0.55) sepia(1) saturate(2) hue-rotate(8deg); cursor: pointer; opacity: 0.75; }
+  .field-row input[type="date"] { color-scheme: dark; }
+  .file-wrap { position: relative; }
+  .file-face {
+    display: flex; align-items: center; gap: 10px; padding: 13px 16px;
+    background: rgba(5,6,15,0.88); border: 1px solid rgba(200,154,16,0.18);
+    border-radius: 2px; color: rgba(90,106,138,0.65);
+    font-family: 'Cormorant Garamond', serif; font-size: 0.95rem;
+    cursor: pointer; transition: border-color 0.3s, color 0.3s; user-select: none;
+  }
+  .file-face:hover { border-color: rgba(200,154,16,0.38); color: #aabace; }
+  .file-wrap input[type="file"] { position: absolute; inset: 0; width: 100%; opacity: 0; cursor: pointer; z-index: 1; }
+  .file-count { margin-top: 7px; font-size: 0.70rem; letter-spacing: 0.18em; color: #5a6a8a; }
+  .modal-btns { display: flex; gap: 14px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
+  .btn-gold { font-family:'Cinzel',serif; font-size:0.78rem; letter-spacing:0.22em; text-transform:uppercase; padding:0.82em 2.6em; background:rgba(200,154,16,0.10); border:1.5px solid rgba(200,154,16,0.48); color:#d8c480; border-radius:2px; cursor:pointer; transition:background 0.3s,color 0.3s,border-color 0.3s,box-shadow 0.3s; }
+  .btn-gold:hover { background: var(--gold-mid); color: #100800; border-color: var(--gold-mid); box-shadow: 0 4px 20px rgba(200,154,16,0.22); }
+  .btn-muted { font-family:'Cinzel',serif; font-size:0.78rem; letter-spacing:0.22em; text-transform:uppercase; padding:0.82em 2.6em; background:transparent; border:1.5px solid rgba(90,106,138,0.30); color:#5a6a8a; border-radius:2px; cursor:pointer; transition:border-color 0.3s,color 0.3s; }
+  .btn-muted:hover { border-color: rgba(90,106,138,0.60); color: #aabace; }
+
+  /* ══ UTILITIES ════════════════════════════════════════════ */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s ease, transform 0.9s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  .d1{transition-delay:.10s} .d2{transition-delay:.20s} .d3{transition-delay:.30s} .d4{transition-delay:.40s}
+
+  @keyframes goldShimmer { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+
+  /* ══ RESPONSIVE ═══════════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .site-header { padding: 0 20px; height: 72px; }
+    .header-logo { height: 48px; }
+    #menu-drop { right: 20px; top: 80px; }
+    .carousel-section { height: 300px; }
+    .dime-content { padding: 60px 30px; }
+    .wwb-content { padding: 0 36px; }
+    .show-card { grid-template-columns: auto 1fr; }
+    .badge { grid-column: 1/-1; justify-self: start; }
+    .modal-box { padding: 42px 22px 34px; }
+  }
+  @media (max-width: 480px) {
+    .carousel-section { height: 220px; }
+    .wwb-content { padding: 0 20px; }
+  }
+  </style>
+</head>
+<body>
+
+<!-- ══ STICKY WHITE HEADER ══════════════════════════════════ -->
+<header class="site-header">
+  <!-- 1pagelogo: visible on page 1; logomain: visible once scrolled away -->
+  <a class="header-logo logo-p1"  href="#" onclick="closeView('buying');closeView('schedule');window.scrollTo({top:0,behavior:'smooth'});return false;" style="line-height:0;display:block;">
+    <img src="page1/1pagelogo.png" alt="East Tennessee Rare Coins" style="height:62px;width:auto;display:block;">
+  </a>
+  <a class="header-logo logo-main" href="#" onclick="closeView('buying');closeView('schedule');window.scrollTo({top:0,behavior:'smooth'});return false;" style="line-height:0;display:block;">
+    <img src="page1/logomain.png" alt="East Tennessee Rare Coins" style="height:62px;width:auto;display:block;">
+  </a>
+  <div class="header-right">
+    <a class="btn-call" href="tel:4233316825">Call Now</a>
+    <a class="btn-dir"
+       href="https://www.google.com/maps/dir//1441+Guthrie+Dr+NW,+Cleveland,+TN+37311/@35.178637,-84.89446,15z/data=!4m9!4m8!1m1!4e2!1m5!1m1!1s0x885e2bdc3febf52f:0xd7c367396a1cc821!2m2!1d-84.8814489!2d35.1880144?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3D"
+       target="_blank" rel="noopener">Directions</a>
+    <button class="btn-menu" id="menu-btn" aria-expanded="false">Menu ▾</button>
+  </div>
+</header>
+
+<!-- MENU DROPDOWN -->
+<div id="menu-drop" role="menu">
+  <button class="menu-item" data-view="buying" role="menuitem">What We Buy</button>
+  <button class="menu-item" data-view="schedule" role="menuitem">Schedule</button>
+</div>
+
+<!-- ══ MAIN SCROLL ═══════════════════════════════════════════
+     PAGE 1 → PAGE 2 → PAGE 3
+══════════════════════════════════════════════════════════════ -->
+
+<!-- ── S1: Coin Carousel (Page 1 top) ─────────────────────── -->
+<section id="s1">
+  <div class="carousel-section">
+    <div class="carousel-track" id="carousel-track"></div>
+  </div>
+</section>
+
+<!-- ── S2: Dime Contact Section (Page 1 bottom) ──────────── -->
+<section id="s2">
+  <img class="bg-after"  src="page1/dimeafter.png"  alt="">
+  <img class="bg-before" src="page1/dimebefore.png" alt="">
+  <div class="flash-el" id="s2-flash"></div>
+  <div class="shade"></div>
+  <div class="dime-content">
+    <div class="dime-headline">Call Us Today!</div>
+    <div class="dime-phone">423-331-6825</div>
+    <div class="dime-rule"></div>
+    <div class="dime-q">Have a Coin Collection needing to be Evaluated?</div>
+    <div class="dime-tag">Experts in US coins specializing in purchasing Large Estates and Coin Collections</div>
+    <div class="dime-rule"></div>
+    <div class="dime-appt">— By Appointment Only —</div>
+    <div class="dime-btns">
+      <a class="d-btn" href="tel:4233316825">Call Now</a>
+      <button class="d-btn d-btn-ghost" onclick="openView('buying')">What We Buy</button>
+      <a class="d-btn d-btn-ghost"
+         href="https://www.google.com/maps/dir//1441+Guthrie+Dr+NW,+Cleveland,+TN+37311/@35.178637,-84.89446,15z/data=!4m9!4m8!1m1!4e2!1m5!1m1!1s0x885e2bdc3febf52f:0xd7c367396a1cc821!2m2!1d-84.8814489!2d35.1880144?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3D"
+         target="_blank" rel="noopener">Directions</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── S3: About Us (Page 2) ──────────────────────────────── -->
+<section id="s3">
+  <div class="section-hero">
+    <div class="section-hero-bg" style="background-image:url('page2/page2backround.png')"></div>
+    <div class="section-hero-text">
+      <span class="hero-eyebrow">Est. Cleveland, Tennessee &nbsp;&middot;&nbsp; ANA Member</span>
+      <div class="hero-title">About East Tennessee<br>Rare Coins</div>
+      <span class="hero-tagline">Professional Numismatic Services &nbsp;&middot;&nbsp; By Appointment Only</span>
+    </div>
+    <div class="scroll-caret-wrap" aria-hidden="true">
+      <span>Scroll</span>
+      <div class="caret-arr"></div>
+    </div>
+  </div>
+  <div class="section-content">
+    <div class="section-inner">
+      <div class="reveal"><h2 class="s-title">Who We Are</h2><div class="s-rule"></div></div>
+      <div class="reveal" style="margin-top:46px">
+        <p class="body-para">
+          East Tennessee Rare Coins is a Numismatic firm owned and operated by professional Coin Dealer
+          and <strong>ANA member, Bo Mucciarone</strong>. With <strong>over a decade in the field</strong>
+          we cater to our clients on an <strong>appointment only basis</strong> to ensure adequate time for
+          key details and accuracy while giving personalized attention and privacy. Located in
+          <strong>Cleveland TN</strong>, we also serve clients from
+          <strong>Chattanooga, Athens, North Georgia</strong> and Southeast Tennessee.
+        </p>
+      </div>
+      <div class="reveal" style="margin-top:52px">
+        <p class="body-para">
+          <strong>East Tennessee Rare Coins can assist in every single step.</strong> Every collection we
+          purchase is carefully reviewed by a professional devoted to the highest ethical standards.
+          <strong>Honesty, Transparency, and Integrity</strong> are our Core Values. Our
+          <strong>By Appointment Only</strong> model means a one-on-one meeting where we review every coin
+          together — you learn the history, stories, and value of each piece, resulting in a fair and honest
+          appraisal. Our <strong>Extensive Network</strong> of industry connections allows us to present
+          unbeatable cash offers.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── S4: Contact ────────────────────────────────────────── -->
+<section id="s4">
+  <div class="section-content">
+    <div class="section-inner">
+      <div class="reveal"><h2 class="s-title">Reach Us</h2><div class="s-rule"></div></div>
+      <div class="reveal" style="margin-top:46px">
+        <p class="body-para">
+          We proudly serve clients across <strong>Cleveland TN, Chattanooga TN, Athens TN, Ooltewah TN</strong>
+          and the surrounding Southeast Tennessee region. All meetings are <strong>by appointment only</strong> —
+          call or message us to arrange a private, one-on-one consultation.
+        </p>
+      </div>
+      <div class="contact-list reveal" style="margin-top:60px; margin-bottom:60px">
+
+        <div class="contact-row">
+          <span class="contact-clabel">Phone</span>
+          <a class="contact-cval" href="tel:4233316825">423-331-6825</a>
+        </div>
+
+        <div class="contact-cdiv"><span class="contact-cdiv-gem">&#9670;</span></div>
+
+        <div class="contact-row">
+          <span class="contact-clabel">Location</span>
+          <span class="contact-cval">1441 Guthrie Drive NW, Cleveland TN</span>
+        </div>
+
+        <div class="contact-cdiv"><span class="contact-cdiv-gem">&#9670;</span></div>
+
+        <div class="contact-row">
+          <span class="contact-clabel">Availability</span>
+          <span class="contact-cval">By Appointment Only</span>
+        </div>
+
+        <div class="contact-cdiv"><span class="contact-cdiv-gem">&#9670;</span></div>
+
+        <div class="contact-row">
+          <span class="contact-clabel">Service Area</span>
+          <span class="contact-cval">Cleveland &nbsp;&middot;&nbsp; Chattanooga &nbsp;&middot;&nbsp; Athens &nbsp;&middot;&nbsp; Ooltewah</span>
+        </div>
+
+      </div>
+      <div class="appt-cta reveal">
+        <p class="sub-label" style="margin-bottom:26px">Ready to Meet?</p>
+        <button class="btn-appt" id="open-appt">Set Up an Appointment</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ OVERLAY: WHAT WE BUY — SHOWCASE ═══════════════════════
+     Only accessible via menu — not in main scroll
+══════════════════════════════════════════════════════════════ -->
+<div id="view-buying" class="overlay-view" aria-hidden="true">
+
+  <!-- Top bar: back left, logo center -->
+  <div class="wwb-topbar">
+    <button class="wwb-topbar-back" onclick="closeView('buying')">&#8592; Back</button>
+    <img class="wwb-topbar-logo" src="page1/logomain.png" alt="East Tennessee Rare Coins"
+         onclick="closeView('buying'); window.scrollTo({top:0,behavior:'smooth'});">
+  </div>
+
+  <!-- Scrollable showcase — top mask fades content as it leaves -->
+  <div class="wwb-scroll" id="wwb-scroll">
+
+    <!-- 01 Silver -->
+    <div class="wwb-item">
+      <div class="wwb-img-frame">
+        <img src="whatwearebuying/silver.jpg" alt="90% Silver Coins">
+      </div>
+      <div class="wwb-item-num">01 &nbsp;/&nbsp; 05</div>
+      <h2 class="wwb-item-title">90% Silver Coins</h2>
+      <div class="wwb-item-rule"></div>
+      <p class="wwb-item-desc">US Half Dollars, Quarters, and Dimes minted 1964 and earlier. Often called "Junk Silver," these coins carry real bullion value and are among the most sought-after pieces by investors and silver stackers alike.</p>
+      <a class="wwb-item-cta" href="tel:4233316825">Call to Sell &mdash; 423-331-6825</a>
+    </div>
+
+    <div class="wwb-sep"></div>
+
+    <!-- 02 Jewelry -->
+    <div class="wwb-item">
+      <div class="wwb-img-frame">
+        <img src="whatwearebuying/jewelry.jpg" alt="Jewelry">
+      </div>
+      <div class="wwb-item-num">02 &nbsp;/&nbsp; 05</div>
+      <h2 class="wwb-item-title">Jewelry</h2>
+      <div class="wwb-item-rule"></div>
+      <p class="wwb-item-desc">We are active buyers of all gold and sterling silver jewelry — 10K, 14K, 18K, 22K, and 24K gold. Bring in your pieces and receive a fair, transparent cash offer on the spot.</p>
+      <a class="wwb-item-cta" href="tel:4233316825">Call to Sell &mdash; 423-331-6825</a>
+    </div>
+
+    <div class="wwb-sep"></div>
+
+    <!-- 03 Currency -->
+    <div class="wwb-item">
+      <div class="wwb-img-frame">
+        <img src="whatwearebuying/currency.jpg" alt="Currency">
+      </div>
+      <div class="wwb-item-num">03 &nbsp;/&nbsp; 05</div>
+      <h2 class="wwb-item-title">Currency</h2>
+      <div class="wwb-item-rule"></div>
+      <p class="wwb-item-desc">Thousands of different bills and notes have been produced in the United States. Bills from the 1800s and early 1900s can carry significant premiums depending on condition and rarity.</p>
+      <a class="wwb-item-cta" href="tel:4233316825">Call to Sell &mdash; 423-331-6825</a>
+    </div>
+
+    <div class="wwb-sep"></div>
+
+    <!-- 04 Rare Coins -->
+    <div class="wwb-item">
+      <div class="wwb-img-frame">
+        <img src="whatwearebuying/rarecoins.jpg" alt="Rare Coins">
+      </div>
+      <div class="wwb-item-num">04 &nbsp;/&nbsp; 05</div>
+      <h2 class="wwb-item-title">Rare Coins</h2>
+      <div class="wwb-item-rule"></div>
+      <p class="wwb-item-desc">From Large Cents and Barber Quarters to Morgan Dollars and Gold Coins — we actively buy all types of scarce U.S. coins that carry a premium over melt or face value due to low mintage, historical significance, or collector demand.</p>
+      <a class="wwb-item-cta" href="tel:4233316825">Call to Sell &mdash; 423-331-6825</a>
+    </div>
+
+    <div class="wwb-sep"></div>
+
+    <!-- 05 Estate Buyouts -->
+    <div class="wwb-item">
+      <div class="wwb-img-frame">
+        <img src="whatwearebuying/buyouts.jpg" alt="Complete Estate Buyouts">
+      </div>
+      <div class="wwb-item-num">05 &nbsp;/&nbsp; 05</div>
+      <h2 class="wwb-item-title">Complete Estate Buyouts</h2>
+      <div class="wwb-item-rule"></div>
+      <p class="wwb-item-desc">We specialize in purchasing entire estates — from small collector sets to lifelong hoards. Bring your collection as-is. We handle all sorting and evaluation on the spot, then present a guaranteed cash offer with no obligation.</p>
+      <a class="wwb-item-cta" href="tel:4233316825">Call to Sell &mdash; 423-331-6825</a>
+    </div>
+
+    <div style="height: 100px"></div>
+  </div>
+
+</div>
+
+<!-- ══ OVERLAY: SCHEDULE ══════════════════════════════════════
+     Only accessible via menu — not in main scroll
+══════════════════════════════════════════════════════════════ -->
+<div id="view-schedule" class="overlay-view" aria-hidden="true">
+  <button class="overlay-close" onclick="closeView('schedule')">← Back</button>
+  <div class="sched-inner">
+    <div class="reveal-s"><h2 class="s-title">Coin Show Schedule</h2><div class="s-rule"></div></div>
+    <div class="reveal-s" style="margin-top:38px">
+      <p class="body-para">Find us at coin shows across the region — no appointment needed. Get a free appraisal or just talk coins. All shows are open to the public.</p>
+    </div>
+    <div class="shows-list">
+      <div class="show-card">
+        <div class="show-date"><span class="show-mon">Jun</span><span class="show-day">6</span><span class="show-yr">2026</span></div>
+        <div class="show-info"><div class="show-name">Knoxville Coin Show</div><div class="show-meta">9am – 3pm &nbsp;·&nbsp; 8807 Kingston Pike, Knoxville, TN 37923</div></div>
+        <span class="badge badge-next">Next Show</span>
+      </div>
+      <div class="show-card">
+        <div class="show-date"><span class="show-mon">Jul</span><span class="show-day">11</span><span class="show-yr">2026</span></div>
+        <div class="show-info"><div class="show-name">Knoxville Coin &amp; Currency Show</div><div class="show-meta">9am – 3pm &nbsp;·&nbsp; 8807 Kingston Pike, Knoxville, TN 37923</div></div>
+        <span class="badge badge-upcoming">Upcoming</span>
+      </div>
+      <div class="show-card">
+        <div class="show-date"><span class="show-mon">Aug</span><span class="show-day">1</span><span class="show-yr">2026</span></div>
+        <div class="show-info"><div class="show-name">Knoxville Coin &amp; Currency Show</div><div class="show-meta">9am – 3pm &nbsp;·&nbsp; 8807 Kingston Pike, Knoxville, TN 37923</div></div>
+        <span class="badge badge-upcoming">Upcoming</span>
+      </div>
+      <div class="show-card">
+        <div class="show-date"><span class="show-mon">Sep</span><span class="show-day">19</span><span class="show-yr">2026</span></div>
+        <div class="show-info"><div class="show-name">Cookeville Coin Show</div><div class="show-meta">9am – 3pm &nbsp;·&nbsp; Cookeville, TN</div></div>
+        <span class="badge badge-upcoming">Upcoming</span>
+      </div>
+      <div class="show-card past">
+        <div class="show-date"><span class="show-mon">Sep</span><span class="show-day">5</span><span class="show-yr">2025</span></div>
+        <div class="show-info"><div class="show-name">Knoxville Coin &amp; Currency Show</div><div class="show-meta">9am – 3pm &nbsp;·&nbsp; 8807 Kingston Pike, Knoxville, TN 37923</div></div>
+        <span class="badge badge-past">Past</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ APPOINTMENT MODAL ══════════════════════════════════════ -->
+<div id="appt-modal" role="dialog" aria-modal="true" aria-labelledby="appt-heading">
+  <div class="modal-box">
+    <button class="modal-close-btn" id="appt-close" aria-label="Close">&times;</button>
+    <h2 class="modal-title" id="appt-heading">Set Up Appointment</h2>
+    <p class="modal-sub">East Tennessee Rare Coins &nbsp;&middot;&nbsp; By Appointment Only</p>
+    <div class="modal-rule"></div>
+    <form id="appt-form" novalidate>
+      <div class="field-row">
+        <label for="f-name">Name</label>
+        <input type="text" id="f-name" placeholder="Your full name" autocomplete="name">
+      </div>
+      <div class="field-row">
+        <label for="f-email">Email<span class="req">*</span></label>
+        <input type="email" id="f-email" placeholder="your@email.com" required autocomplete="email">
+      </div>
+      <div class="field-row">
+        <label for="f-msg">Message</label>
+        <textarea id="f-msg" placeholder="Briefly describe your collection or request…"></textarea>
+      </div>
+      <div class="field-row">
+        <label>Attach Files</label>
+        <div class="file-wrap">
+          <div class="file-face" id="file-face"><em style="opacity:.55;font-style:normal">📎</em><span id="file-lbl">Choose files…</span></div>
+          <input type="file" id="f-files" multiple accept="image/*,.pdf,.doc,.docx">
+        </div>
+        <div class="file-count" id="file-count">Attachments (0)</div>
+      </div>
+      <div class="field-row">
+        <label for="f-date">Day of Appointment<span class="req">*</span></label>
+        <input type="date" id="f-date" required>
+      </div>
+      <div class="modal-btns">
+        <button type="submit" class="btn-gold">Send Request</button>
+        <button type="button" class="btn-muted" id="appt-cancel">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+/* ══ CAROUSEL ════════════════════════════════════════════ */
+const IMGS = [
+  'page1/firstpagebackround.jpg',  'page1/firstpagebackround1.jpg',
+  'page1/firstpagebackround2.jpg', 'page1/firstpagebackround3.jpg',
+  'page1/firstpagebackround4.jpg', 'page1/firstpagebackround5.jpg',
+  'page1/firstpagebackround6.jpg', 'page1/firstpagebackround7.jpg',
+  'page1/firstpagebackround8.jpg', 'page1/firstpagebackround9.jpg',
+  'page1/firstpagebackround10.jpg','page1/firstpagebackround11.jpg',
+  'page1/firstpagebackround12.jpg','page1/firstpagebackround13.jpg',
+  'page1/firstpagebackround14.jpg','page1/firstpagebackround15.jpg',
+  'page1/firstpagebackround16.jpg','page1/firstpagebackround17.jpg',
+  'page1/firstpagebackround19.jpg','page1/firstpagebackround20.jpg',
+  'page1/firstpagebackround21.jpg','page1/firstpagebackround22.jpg',
+  'page1/firstpagebackround23.jpg','page1/firstpagebackround24.jpg',
+  'page1/firstpagebackround25.jpg','page1/firstpagebackround26.jpg',
+  'page1/firstpagebackround27.jpg','page1/firstpagebackround28.webp'
+];
+const ct = document.getElementById('carousel-track');
+[...IMGS, ...IMGS].forEach(src => {
+  const d = document.createElement('div'); d.className = 'carousel-item';
+  const i = document.createElement('img'); i.src = src; i.alt = ''; i.loading = 'lazy';
+  d.appendChild(i); ct.appendChild(d);
+});
+
+/* ══ LOGO — slide to center + gold when scrolled past carousel ══ */
+const siteHeader = document.querySelector('.site-header');
+const s1Section  = document.getElementById('s1');
+window.addEventListener('scroll', () => {
+  siteHeader.classList.toggle('scrolled', s1Section.getBoundingClientRect().bottom <= 0);
+}, { passive: true });
+
+/* ══ DIME SECTION — trigger fade when in view ═══════════ */
+const s2 = document.getElementById('s2');
+const s2Before = s2.querySelector('.bg-before');
+new IntersectionObserver(([e], obs) => {
+  if (e.isIntersecting) {
+    s2Before.classList.add('animate');
+    obs.disconnect();
+  }
+}, { threshold: 0.05 }).observe(s2);
+
+/* ══ MENU ════════════════════════════════════════════════ */
+const menuBtn  = document.getElementById('menu-btn');
+const menuDrop = document.getElementById('menu-drop');
+
+menuBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  const open = menuDrop.classList.toggle('open');
+  menuBtn.classList.toggle('open', open);
+  menuBtn.setAttribute('aria-expanded', open);
+});
+document.addEventListener('click', () => {
+  menuDrop.classList.remove('open');
+  menuBtn.classList.remove('open');
+  menuBtn.setAttribute('aria-expanded', false);
+});
+
+/* ══ VIEW SWITCHING ══════════════════════════════════════ */
+function openView(name) {
+  menuDrop.classList.remove('open');
+  menuBtn.classList.remove('open');
+  const el = document.getElementById('view-' + name);
+  el.classList.add('active');
+  el.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  if (name === 'buying') {
+    document.getElementById('wwb-scroll').scrollTop = 0;
+  }
+}
+
+function closeView(name) {
+  const el = document.getElementById('view-' + name);
+  el.classList.remove('active');
+  el.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+document.querySelectorAll('.menu-item').forEach(btn =>
+  btn.addEventListener('click', () => openView(btn.dataset.view))
+);
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeView('buying');
+    closeView('schedule');
+  }
+});
+
+
+/* ══ APPOINTMENT MODAL ══════════════════════════════════ */
+const apptModal = document.getElementById('appt-modal');
+function openAppt()  { apptModal.classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeAppt() { apptModal.classList.remove('open'); document.body.style.overflow = ''; }
+document.getElementById('open-appt').addEventListener('click', openAppt);
+document.getElementById('appt-close').addEventListener('click', closeAppt);
+document.getElementById('appt-cancel').addEventListener('click', closeAppt);
+apptModal.addEventListener('click', e => { if (e.target === apptModal) closeAppt(); });
+document.getElementById('appt-form').addEventListener('submit', e => e.preventDefault());
+
+const fFiles = document.getElementById('f-files');
+fFiles.addEventListener('change', () => {
+  const n = fFiles.files.length;
+  document.getElementById('file-count').textContent = `Attachments (${n})`;
+  document.getElementById('file-lbl').textContent = n === 0 ? 'Choose files…' : n === 1 ? fFiles.files[0].name : `${n} files selected`;
+});
+
+const today = new Date();
+document.getElementById('f-date').min =
+  `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+
+/* ══ SCROLL REVEAL ══════════════════════════════════════ */
+const revIO = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revIO.unobserve(e.target); } });
+}, { threshold: 0.10 });
+document.querySelectorAll('.reveal').forEach(el => revIO.observe(el));
+</script>
+</body>
+</html>
