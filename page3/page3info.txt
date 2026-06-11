@@ -1,0 +1,19 @@
+Contact Us
+Buying rare and old coins, estates, scrap gold in Cleveland TN, Chattanooga TN, Athens TN, Ooltewah TN
+
+East Tennessee Rare Coins
+Cleveland TN
+
+423-331-6825
+
+BY APPOINTMENT ONLY
+
+Send
+Cancel
+(Set up appointment) This should be a button which when clicked should open a seperate page not on the main page and show a template like this Set up appointment
+Name
+Email*
+Message
+Attach Files
+Attachments (0)
+Day of appointment (it should not let you click a day that was before the current time)

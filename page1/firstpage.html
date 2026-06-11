@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>East Tennessee Rare Coins</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700;1,900&family=Orbitron:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold:      #C9A84C;
+      --gold-warm: #E8C840;
+      --dark:      #0c0a06;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Cormorant Garamond', serif;
+      background: #fff;
+      color: #1a1410;
+    }
+
+    /* ══ HEADER ═══════════════════════════════════════════ */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      height: 88px;
+      background: #ffffff;
+      border-bottom: 1px solid rgba(0,0,0,0.10);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      box-shadow: 0 2px 18px rgba(0,0,0,0.07);
+    }
+
+    .header-logo {
+      height: 64px;
+      width: auto;
+      display: block;
+    }
+
+    .header-contact {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .header-call-now {
+      font-family: 'Cinzel', serif;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      padding: 0.75em 2.0em;
+      border: 2px solid var(--gold);
+      background: var(--gold);
+      color: #050300;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.22s, color 0.22s, box-shadow 0.22s;
+    }
+
+    .header-call-now:hover {
+      background: transparent;
+      color: var(--gold);
+      box-shadow: 0 0 0 2px var(--gold);
+    }
+
+    .header-cta {
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.72em 1.8em;
+      border: 1.5px solid var(--dark);
+      background: var(--dark);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.22s, color 0.22s, border-color 0.22s;
+    }
+
+    .header-cta:hover {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #050300;
+    }
+
+    /* ══ CAROUSEL SECTION ═════════════════════════════════ */
+    @keyframes scrollLeft {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .carousel-section {
+      background: #000;
+      height: 420px;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    .carousel-track {
+      display: flex;
+      height: 100%;
+      width: max-content;
+      animation: scrollLeft 100s linear infinite;
+    }
+
+    .carousel-section:hover .carousel-track {
+      animation-play-state: paused;
+    }
+
+    .carousel-item {
+      height: 100%;
+      flex-shrink: 0;
+    }
+
+    .carousel-item img {
+      height: 100%;
+      width: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    /* ══ BOTTOM CONTENT SECTION ══════════════════════════ */
+    .bottom-section {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      min-height: 100vh;
+      opacity: 0;
+      transition: opacity 1.4s ease;
+    }
+
+    .bottom-section.revealed { opacity: 1; }
+
+    /* Two stacked background images — before fades out revealing after */
+    .bottom-section .bg-before,
+    .bottom-section .bg-after {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .bottom-section .bg-after  { z-index: 0; }
+    .bottom-section .bg-before {
+      z-index: 1;
+      animation: bgFadeOut 4s ease-in-out 1s forwards;
+    }
+
+    @keyframes bgFadeOut {
+      0%   { opacity: 1; }
+      30%  { opacity: 0.85; }
+      100% { opacity: 0; }
+    }
+
+    /* Dark gradient on left so text is readable */
+    .bottom-section .bg-shade {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(to right,
+        rgba(0,0,0,0.72) 0%,
+        rgba(0,0,0,0.55) 40%,
+        rgba(0,0,0,0.15) 75%,
+        transparent 100%);
+      pointer-events: none;
+    }
+
+    .bottom-content {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+      gap: clamp(10px, 1.8vw, 18px);
+      max-width: 680px;
+      width: 100%;
+      padding: 80px 60px 80px 80px;
+    }
+
+    .gold-rule {
+      width: 76px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      margin: 4px 0;
+      flex-shrink: 0;
+    }
+
+    .ct-headline {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2.2rem, 5.5vw, 5.2rem);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      line-height: 1.05;
+      color: #ffffff;
+      text-shadow: 0 4px 32px rgba(0,0,0,0.9);
+    }
+
+    .ct-phone {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.4rem, 3.2vw, 3.0rem);
+      letter-spacing: 0.10em;
+      color: var(--gold-warm);
+      text-shadow: 0 2px 20px rgba(0,0,0,0.85), 0 0 30px rgba(232,200,64,0.3);
+    }
+
+    .ct-question {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 600;
+      font-size: clamp(0.85rem, 1.8vw, 1.5rem);
+      letter-spacing: 0.05em;
+      color: #ffffff;
+      line-height: 1.5;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.75);
+    }
+
+    .ct-tagline {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 400;
+      font-size: clamp(0.72rem, 1.3vw, 1.1rem);
+      letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.7;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.7);
+    }
+
+    .ct-appt {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 600;
+      font-size: clamp(0.85rem, 1.6vw, 1.3rem);
+      letter-spacing: 0.12em;
+      color: var(--gold-warm);
+      text-shadow: 0 0 24px rgba(232,200,64,0.55);
+    }
+
+    /* ── Buttons ── */
+    .btn-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      margin-top: 10px;
+    }
+
+    .btn {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 0.92em 3.2em;
+      border: 1.5px solid var(--gold);
+      background: transparent;
+      color: var(--gold);
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.22s, color 0.22s, box-shadow 0.22s, border-color 0.22s;
+    }
+
+    .btn:hover {
+      background: var(--gold);
+      color: #050300;
+      box-shadow: 0 4px 22px rgba(201,168,76,0.45);
+    }
+
+    .btn-dark {
+      border-color: rgba(255,255,255,0.60);
+      color: rgba(255,255,255,0.85);
+    }
+
+    .btn-dark:hover {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      border-color: #fff;
+      box-shadow: none;
+    }
+
+    /* ══ RESPONSIVE ═══════════════════════════════════════ */
+    @media (max-width: 768px) {
+      .site-header    { padding: 0 20px; height: 72px; }
+      .header-logo    { height: 48px; }
+      .header-phone   { display: none; }
+      .carousel-section { height: 280px; }
+      .bottom-content { padding: 40px 20px; }
+    }
+
+    @media (max-width: 480px) {
+      .carousel-section { height: 220px; }
+      .btn { padding: 0.82em 2em; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ HEADER ══ -->
+  <header class="site-header">
+    <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" style="line-height:0;">
+      <img class="header-logo" src="logomain.png" alt="East Tennessee Rare Coins">
+    </a>
+    <div class="header-contact">
+      <a class="header-call-now" href="tel:4233316825">Call Now</a>
+      <a class="header-cta"
+         href="https://www.google.com/maps/dir//1441+Guthrie+Dr+NW,+Cleveland,+TN+37311/@35.178637,-84.89446,15z/data=!4m9!4m8!1m1!4e2!1m5!1m1!1s0x885e2bdc3febf52f:0xd7c367396a1cc821!2m2!1d-84.8814489!2d35.1880144?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3D"
+         target="_blank" rel="noopener">Directions</a>
+    </div>
+  </header>
+
+  <!-- ══ IMAGE CAROUSEL ══ -->
+  <div class="carousel-section">
+    <div class="carousel-track" id="track"></div>
+  </div>
+
+  <!-- ══ BOTTOM CONTENT SECTION ══ -->
+  <div class="bottom-section" id="bottom-section">
+    <img class="bg-after"  src="dimeafter.png"  alt="">
+    <img class="bg-before" src="dimebefore.png" alt="">
+    <div class="bg-shade"></div>
+    <div class="bottom-content">
+
+      <div class="ct-headline">Call Us Today!</div>
+      <div class="ct-phone">423-331-6825</div>
+
+      <div class="gold-rule"></div>
+
+      <div class="ct-question">Have a Coin Collection needing to be Evaluated?</div>
+      <div class="ct-tagline">Experts in US coins specializing in purchasing Large Estates and Coin Collections</div>
+
+      <div class="gold-rule"></div>
+
+      <div class="ct-appt">— By Appointment Only —</div>
+
+      <div class="btn-row">
+        <a class="btn"
+           href="https://www.google.com/maps/dir//1441+Guthrie+Dr+NW,+Cleveland,+TN+37311/@35.178637,-84.89446,15z/data=!4m9!4m8!1m1!4e2!1m5!1m1!1s0x885e2bdc3febf52f:0xd7c367396a1cc821!2m2!1d-84.8814489!2d35.1880144?entry=ttu&g_ep=EgoyMDI2MDUyNy4wIKXMDSoASAFQAw%3D%3D"
+           target="_blank" rel="noopener">Directions</a>
+        <a class="btn btn-dark" href="../whatwearebuying/whatwearebuying.html">What We Buy</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    /* ══ CAROUSEL — continuous auto-scroll, each image natural size ══ */
+    const IMAGES = [
+      'firstpagebackround.jpg',
+      'firstpagebackround1.jpg',
+      'firstpagebackround2.jpg',
+      'firstpagebackround3.jpg',
+      'firstpagebackround4.jpg',
+      'firstpagebackround5.jpg',
+      'firstpagebackround6.jpg',
+      'firstpagebackround7.jpg',
+      'firstpagebackround8.jpg',
+      'firstpagebackround9.jpg',
+      'firstpagebackround10.jpg',
+      'firstpagebackround11.jpg',
+      'firstpagebackround12.jpg',
+      'firstpagebackround13.jpg',
+      'firstpagebackround14.jpg',
+      'firstpagebackround15.jpg',
+      'firstpagebackround16.jpg',
+      'firstpagebackround17.jpg',
+      'firstpagebackround19.jpg',
+      'firstpagebackround20.jpg',
+      'firstpagebackround21.jpg',
+      'firstpagebackround22.jpg',
+      'firstpagebackround23.jpg',
+      'firstpagebackround24.jpg',
+      'firstpagebackround25.jpg',
+      'firstpagebackround26.jpg',
+      'firstpagebackround27.jpg',
+      'firstpagebackround28.webp'
+    ];
+
+    const trackEl = document.getElementById('track');
+
+    /* Build original set + identical clone set for seamless loop.
+       CSS animates translateX(-50%) which = exactly one full set width. */
+    [...IMAGES, ...IMAGES].forEach(src => {
+      const item = document.createElement('div');
+      item.className = 'carousel-item';
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = '';
+      img.loading = 'lazy';
+      item.appendChild(img);
+      trackEl.appendChild(item);
+    });
+
+    /* ── Full-screen bottom image fade-in on scroll ── */
+    const bottomSection = document.getElementById('bottom-section');
+    if (bottomSection) {
+      new IntersectionObserver(([entry], obs) => {
+        if (entry.isIntersecting) {
+          bottomSection.classList.add('revealed');
+          obs.disconnect();
+        }
+      }, { threshold: 0.05 }).observe(bottomSection);
+    }
+  </script>
+
+</body>
+</html>

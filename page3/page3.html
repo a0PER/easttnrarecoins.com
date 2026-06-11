@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us – East Tennessee Rare Coins | Coin Dealer Cleveland TN</title>
+  <meta name="description" content="Contact East Tennessee Rare Coins – professional coin dealer, appraiser, and buyer in Cleveland TN, Chattanooga TN, Athens TN. Call 423-331-6825. By appointment only.">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --dark-bg:    #05060f;
+      --gold-mid:   #c89a10;
+      --gold-pale:  #fff8c0;
+      --text-body:  #aabace;
+      --text-strong:#e0cb80;
+      --text-muted: #5a6a8a;
+    }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      color: var(--text-body);
+      overflow-x: hidden;
+      background: var(--dark-bg);
+    }
+
+    /* ─── Fixed Background ─── */
+    #fixed-bg {
+      position: fixed; inset: 0;
+      background: url('page3backround.png') center / cover no-repeat;
+      background-color: var(--dark-bg);
+      z-index: 0;
+    }
+    #fixed-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background:
+        linear-gradient(rgba(5,6,15,0.65), rgba(5,6,15,0.65)),
+        radial-gradient(ellipse 110% 100% at 50% 50%,
+          transparent 38%, rgba(5,6,15,0.25) 70%, rgba(5,6,15,0.50) 100%);
+    }
+
+    /* ─── Particle Canvas ─── */
+    #dust-canvas {
+      position: fixed; inset: 0;
+      z-index: 3; pointer-events: none;
+    }
+
+    /* ─── Title ─── */
+    #title-wrap {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 4; text-align: center;
+      width: 90vw; pointer-events: none;
+      opacity: 0;
+      animation: titleFadeIn 1.3s ease 0.5s forwards;
+    }
+    .t-eyebrow {
+      display: block;
+      font-size: clamp(0.52rem, 0.9vw, 0.68rem);
+      letter-spacing: 0.44em; text-transform: uppercase;
+      color: rgba(210,200,180,0.70); margin-bottom: 16px;
+    }
+    .t-line {
+      display: block; line-height: 1.18;
+      margin-bottom: 2px; white-space: nowrap;
+    }
+    .ls {
+      display: inline-block;
+      font-size: clamp(1.55rem, 3.4vw, 2.7rem);
+      font-weight: bold; letter-spacing: 0.05em;
+      will-change: transform, opacity, filter;
+    }
+    .ls-sp {
+      display: inline-block;
+      font-size: clamp(1.55rem, 3.4vw, 2.7rem);
+      width: 0.3em;
+    }
+    .t-tagline {
+      display: block; margin-top: 14px;
+      font-size: clamp(0.62rem, 1.1vw, 0.80rem);
+      letter-spacing: 0.18em; color: rgba(200,216,240,0.52);
+    }
+
+    #hero { position: relative; height: 100vh; z-index: 1; }
+
+    /* ─── Scroll Caret ─── */
+    #scroll-caret {
+      position: fixed; bottom: 48px; left: 50%;
+      transform: translateX(-50%); z-index: 5;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 10px;
+      pointer-events: none; opacity: 0;
+      animation: titleFadeIn 1s ease 1.9s forwards;
+      transition: opacity 0.3s;
+    }
+    #scroll-caret span {
+      font-size: 0.58rem; letter-spacing: 0.36em;
+      text-transform: uppercase; color: rgba(200,154,16,0.55);
+    }
+    .caret-arrow {
+      width: 13px; height: 13px;
+      border-right: 1.5px solid rgba(200,154,16,0.55);
+      border-bottom: 1.5px solid rgba(200,154,16,0.55);
+      transform: rotate(45deg);
+      animation: bounceDown 2s ease-in-out infinite;
+    }
+
+    /* ─── Content Section ─── */
+    #contact {
+      position: relative; z-index: 1;
+      background: rgba(5,6,15,0.84);
+      border-top: 1px solid rgba(200,154,16,0.22);
+    }
+    .section-inner { max-width: 960px; margin: 0 auto; padding: 96px 36px 120px; }
+
+    .section-title {
+      text-align: center; letter-spacing: 0.07em;
+      background: linear-gradient(130deg,
+        #b8860b 0%,#e0c040 28%,#fff8c0 50%,#e0c040 72%,#b8860b 100%);
+      background-size: 300% 100%;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: goldShimmer 12s ease infinite;
+    }
+    .title-lg { font-size: clamp(1.6rem, 3.6vw, 2.7rem); }
+
+    .gold-rule {
+      width: 60px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-mid), transparent);
+      margin: 18px auto 0;
+    }
+
+    .body-para {
+      font-size: clamp(0.97rem, 1.8vw, 1.08rem); line-height: 1.96;
+      color: var(--text-body); text-align: center; max-width: 760px; margin: 0 auto;
+    }
+    .body-para strong { color: var(--text-strong); font-weight: normal; }
+
+    .sep {
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(200,154,16,0.18), transparent);
+      margin: 68px 0;
+    }
+
+    .sub-label {
+      text-align: center; font-size: clamp(0.65rem, 1.2vw, 0.78rem);
+      letter-spacing: 0.32em; text-transform: uppercase;
+      color: rgba(200,154,16,0.68); margin-bottom: 36px;
+    }
+
+    /* ─── Info Cards ─── */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(192px, 1fr));
+      gap: 16px; margin-bottom: 16px;
+    }
+    .info-card {
+      position: relative; background: rgba(5,6,15,0.72);
+      border: 1px solid rgba(200,154,16,0.16); border-radius: 2px;
+      padding: 36px 22px 30px; text-align: center; overflow: hidden;
+      transition: background .4s, border-color .4s, transform .3s; cursor: default;
+    }
+    .info-card::before {
+      content: ''; position: absolute; top: 0; left: -100%;
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,215,0,.55), transparent);
+      transition: left .7s ease;
+    }
+    .info-card:hover { background: rgba(200,154,16,.10); border-color: rgba(200,154,16,.34); transform: translateY(-5px); }
+    .info-card:hover::before { left: 100%; }
+    .info-glyph { display: block; font-size: 1.3rem; color: rgba(200,154,16,.5); margin-bottom: 14px; font-style: normal; }
+    .info-label { display: block; font-size: clamp(0.58rem, 1vw, 0.66rem); letter-spacing: 0.38em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px; }
+    .info-value { font-size: clamp(.87rem, 1.6vw, 1rem); color: #d8c480; line-height: 1.7; }
+    .info-value a { color: #d8c480; text-decoration: none; transition: color .3s; }
+    .info-value a:hover { color: var(--gold-pale); }
+
+    /* ─── Inquiry Form ─── */
+    .form-card {
+      background: rgba(5,6,15,0.72);
+      border: 1px solid rgba(200,154,16,0.16); border-radius: 2px;
+      padding: 48px 44px 40px;
+      max-width: 680px; margin: 0 auto;
+    }
+
+    .field-row { margin-bottom: 22px; }
+    .field-row label {
+      display: block; margin-bottom: 8px;
+      font-size: 0.68rem; letter-spacing: 0.30em; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .field-row label .req { color: rgba(200,154,16,0.75); margin-left: 3px; }
+
+    .field-row input[type="text"],
+    .field-row input[type="email"],
+    .field-row input[type="date"],
+    .field-row textarea {
+      width: 100%; padding: 13px 16px;
+      background: rgba(5,6,15,0.88);
+      border: 1px solid rgba(200,154,16,0.18);
+      border-radius: 2px;
+      color: var(--text-body);
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color .3s, box-shadow .3s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .field-row input:focus,
+    .field-row textarea:focus {
+      border-color: rgba(200,154,16,0.5);
+      box-shadow: 0 0 0 3px rgba(200,154,16,0.07);
+    }
+    .field-row input::placeholder,
+    .field-row textarea::placeholder { color: rgba(90,106,138,0.6); }
+    .field-row textarea { resize: vertical; min-height: 120px; }
+
+    /* date picker tint */
+    .field-row input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(0.55) sepia(1) saturate(2) hue-rotate(8deg);
+      cursor: pointer; opacity: 0.75;
+    }
+    .field-row input[type="date"] { color-scheme: dark; }
+
+    /* ─── Buttons ─── */
+    .btn-row { display: flex; gap: 14px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
+
+    .btn-gold {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: clamp(0.75rem, 1.4vw, 0.88rem);
+      letter-spacing: 0.22em; text-transform: uppercase;
+      padding: 0.82em 2.6em;
+      background: rgba(200,154,16,0.10);
+      border: 1.5px solid rgba(200,154,16,0.48);
+      color: #d8c480; border-radius: 2px; cursor: pointer;
+      transition: background .3s, color .3s, border-color .3s, box-shadow .3s;
+    }
+    .btn-gold:hover {
+      background: var(--gold-mid); color: #100800;
+      border-color: var(--gold-mid);
+      box-shadow: 0 4px 20px rgba(200,154,16,0.22);
+    }
+
+    .btn-muted {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: clamp(0.75rem, 1.4vw, 0.88rem);
+      letter-spacing: 0.22em; text-transform: uppercase;
+      padding: 0.82em 2.6em;
+      background: transparent;
+      border: 1.5px solid rgba(90,106,138,0.30);
+      color: var(--text-muted); border-radius: 2px; cursor: pointer;
+      transition: border-color .3s, color .3s;
+    }
+    .btn-muted:hover { border-color: rgba(90,106,138,0.60); color: var(--text-body); }
+
+    /* ─── Appointment CTA ─── */
+    .appt-cta { text-align: center; }
+
+    .btn-appt {
+      position: relative; overflow: hidden;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: clamp(0.82rem, 1.5vw, 0.98rem);
+      letter-spacing: 0.22em; text-transform: uppercase;
+      padding: 1.05em 3.2em;
+      background: rgba(200,154,16,0.10);
+      border: 1.5px solid rgba(200,154,16,0.45);
+      color: #d8c480; border-radius: 2px; cursor: pointer;
+      transition: background .4s, color .4s, border-color .4s, box-shadow .4s;
+    }
+    .btn-appt::before {
+      content: ''; position: absolute; top: 0; left: -120%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,215,0,0.10), transparent);
+      transition: left .65s ease;
+    }
+    .btn-appt:hover {
+      background: var(--gold-mid); color: #100800;
+      border-color: var(--gold-mid);
+      box-shadow: 0 6px 28px rgba(200,154,16,0.28);
+    }
+    .btn-appt:hover::before { left: 120%; }
+
+    /* ─── Modal ─── */
+    #modal-overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(5,6,15,0.86);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      opacity: 0; pointer-events: none;
+      transition: opacity .35s ease;
+    }
+    #modal-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .modal-box {
+      position: relative;
+      background: #070a18;
+      border: 1px solid rgba(200,154,16,0.28);
+      border-radius: 3px;
+      padding: 52px 44px 44px;
+      width: min(580px, 100%);
+      max-height: 90vh;
+      overflow-y: auto;
+      transform: translateY(18px) scale(0.99);
+      transition: transform .38s ease;
+    }
+    #modal-overlay.open .modal-box {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-close {
+      position: absolute; top: 18px; right: 20px;
+      background: none; border: none; cursor: pointer;
+      color: var(--text-muted); font-size: 1.5rem; line-height: 1;
+      transition: color .25s; padding: 4px 8px;
+    }
+    .modal-close:hover { color: #d8c480; }
+
+    .modal-title {
+      text-align: center; margin-bottom: 6px;
+      font-size: clamp(1.3rem, 2.6vw, 1.8rem);
+      letter-spacing: 0.05em;
+      background: linear-gradient(130deg,
+        #b8860b 0%,#e0c040 28%,#fff8c0 50%,#e0c040 72%,#b8860b 100%);
+      background-size: 300% 100%;
+      -webkit-background-clip: text; background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: goldShimmer 12s ease infinite;
+    }
+    .modal-sub {
+      text-align: center; margin-bottom: 34px;
+      font-size: 0.68rem; letter-spacing: 0.34em; text-transform: uppercase;
+      color: rgba(200,154,16,0.52);
+    }
+    .modal-rule {
+      width: 50px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-mid), transparent);
+      margin: 0 auto 34px;
+    }
+
+    /* File input */
+    .file-wrap { position: relative; }
+    .file-face {
+      display: flex; align-items: center; gap: 10px;
+      padding: 13px 16px;
+      background: rgba(5,6,15,0.88);
+      border: 1px solid rgba(200,154,16,0.18);
+      border-radius: 2px;
+      color: rgba(90,106,138,0.65);
+      font-family: 'Georgia', 'Times New Roman', serif;
+      font-size: 0.92rem;
+      cursor: pointer;
+      transition: border-color .3s, color .3s;
+      user-select: none;
+    }
+    .file-face:hover { border-color: rgba(200,154,16,0.38); color: var(--text-body); }
+    .file-face .clip-icon { opacity: 0.55; font-style: normal; flex-shrink: 0; }
+    .file-wrap input[type="file"] {
+      position: absolute; inset: 0; width: 100%; opacity: 0; cursor: pointer; z-index: 1;
+    }
+    .file-count {
+      margin-top: 7px;
+      font-size: 0.72rem; letter-spacing: 0.18em;
+      color: var(--text-muted);
+    }
+
+    /* ─── Scroll Reveal ─── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .9s ease, transform .9s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    .d1 { transition-delay: .12s; }
+    .d2 { transition-delay: .22s; }
+    .d3 { transition-delay: .32s; }
+
+    /* ─── Keyframes ─── */
+    @keyframes titleFadeIn {
+      from { opacity:0; transform:translate(-50%,calc(-50% + 12px)); }
+      to   { opacity:1; transform:translate(-50%,-50%); }
+    }
+    @keyframes bounceDown {
+      0%,100% { transform:rotate(45deg) translateY(0); opacity:.55; }
+      50%     { transform:rotate(45deg) translateY(7px); opacity:1; }
+    }
+    @keyframes goldShimmer {
+      0%,100% { background-position:0% 50%; }
+      50%     { background-position:100% 50%; }
+    }
+
+    @media (max-width: 600px) {
+      .section-inner { padding: 72px 22px 90px; }
+      .ls, .ls-sp { font-size: clamp(1.2rem, 7vw, 1.8rem); }
+      .form-card { padding: 32px 20px 28px; }
+      .modal-box { padding: 42px 22px 34px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="fixed-bg"></div>
+  <canvas id="dust-canvas"></canvas>
+
+  <!-- Hero Title -->
+  <div id="title-wrap">
+    <span class="t-eyebrow">Est. Cleveland, Tennessee &nbsp;&middot;&nbsp; ANA Member</span>
+    <div class="t-line" id="tline1"></div>
+    <div class="t-line" id="tline2"></div>
+    <span class="t-tagline">Professional Numismatic Services &nbsp;&middot;&nbsp; By Appointment Only</span>
+  </div>
+
+  <section id="hero"></section>
+
+  <div id="scroll-caret" aria-hidden="true">
+    <span>Scroll</span>
+    <div class="caret-arrow"></div>
+  </div>
+
+  <!-- ═══════════════════════════════ CONTENT ═══════════════════════════════ -->
+  <section id="contact">
+    <div class="section-inner">
+
+      <!-- Header -->
+      <div class="reveal">
+        <h2 class="section-title title-lg">Get In Touch</h2>
+        <div class="gold-rule"></div>
+      </div>
+
+      <div class="reveal" style="margin-top:46px">
+        <p class="body-para">
+          East Tennessee Rare Coins proudly serves clients across
+          <strong>Cleveland TN, Chattanooga TN, Athens TN, Ooltewah TN</strong>
+          and the surrounding Southeast Tennessee region.
+          All meetings are <strong>by appointment only</strong> — call or send us a message
+          to arrange a private, one-on-one consultation.
+        </p>
+      </div>
+
+      <div class="sep reveal"></div>
+
+      <!-- Contact Info Cards -->
+      <div class="reveal">
+        <p class="sub-label">Reach Us Directly</p>
+      </div>
+      <div class="info-grid">
+        <div class="info-card reveal">
+          <em class="info-glyph">&#9990;</em>
+          <span class="info-label">Phone</span>
+          <div class="info-value"><a href="tel:4233316825">423-331-6825</a></div>
+        </div>
+        <div class="info-card reveal d1">
+          <em class="info-glyph">&#10070;</em>
+          <span class="info-label">Location</span>
+          <div class="info-value">1441 Guthrie Drive NW<br>Cleveland, TN</div>
+        </div>
+        <div class="info-card reveal d2">
+          <em class="info-glyph">&#9670;</em>
+          <span class="info-label">Availability</span>
+          <div class="info-value">By Appointment Only</div>
+        </div>
+        <div class="info-card reveal d3">
+          <em class="info-glyph">&#9672;</em>
+          <span class="info-label">Service Area</span>
+          <div class="info-value">Cleveland &nbsp;&middot;&nbsp; Chattanooga<br>Athens &nbsp;&middot;&nbsp; Ooltewah, TN</div>
+        </div>
+      </div>
+
+      <div class="sep reveal"></div>
+
+      <!-- Appointment CTA -->
+      <div class="appt-cta reveal">
+        <p class="sub-label" style="margin-bottom:26px">Ready to Meet?</p>
+        <button class="btn-appt" id="open-modal">Set Up an Appointment</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════ MODAL ═══════════════════════════════ -->
+  <div id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-heading">
+    <div class="modal-box">
+      <button class="modal-close" id="modal-close" aria-label="Close">&times;</button>
+      <h2 class="modal-title" id="modal-heading">Set Up Appointment</h2>
+      <p class="modal-sub">East Tennessee Rare Coins &nbsp;&middot;&nbsp; By Appointment Only</p>
+      <div class="modal-rule"></div>
+
+      <form id="appt-form" novalidate>
+        <div class="field-row">
+          <label for="appt-name">Name</label>
+          <input type="text" id="appt-name" name="appt-name" placeholder="Your full name" autocomplete="name">
+        </div>
+        <div class="field-row">
+          <label for="appt-email">Email<span class="req">*</span></label>
+          <input type="email" id="appt-email" name="appt-email" placeholder="your@email.com" required autocomplete="email">
+        </div>
+        <div class="field-row">
+          <label for="appt-msg">Message</label>
+          <textarea id="appt-msg" name="appt-msg" placeholder="Briefly describe your collection or request&#8230;"></textarea>
+        </div>
+        <div class="field-row">
+          <label>Attach Files</label>
+          <div class="file-wrap">
+            <div class="file-face" id="file-face">
+              <em class="clip-icon">&#128206;</em>
+              <span id="file-label-text">Choose files&hellip;</span>
+            </div>
+            <input type="file" id="appt-files" name="files" multiple accept="image/*,.pdf,.doc,.docx">
+          </div>
+          <div class="file-count" id="file-count">Attachments (0)</div>
+        </div>
+        <div class="field-row">
+          <label for="appt-date">Day of Appointment<span class="req">*</span></label>
+          <input type="date" id="appt-date" name="appt-date" required>
+        </div>
+        <div class="btn-row">
+          <button type="submit" class="btn-gold">Send</button>
+          <button type="button" class="btn-muted" id="modal-cancel">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+  /* ═══════════════════════════════════════════════════════════
+     1.  BUILD INDIVIDUAL LETTER SPANS
+  ═══════════════════════════════════════════════════════════ */
+  const TITLE_LINES = [
+    { id: 'tline1', text: 'Contact Us' },
+    { id: 'tline2', text: 'East Tennessee Rare Coins' }
+  ];
+  const allLetters = [];
+
+  TITLE_LINES.forEach(({ id, text }) => {
+    const container = document.getElementById(id);
+    [...text].forEach(ch => {
+      const s = document.createElement('span');
+      if (ch === ' ') {
+        s.className = 'ls-sp';
+      } else {
+        s.className = 'ls';
+        s.textContent = ch;
+        allLetters.push(s);
+      }
+      container.appendChild(s);
+    });
+  });
+
+
+  /* ═══════════════════════════════════════════════════════════
+     2.  SILVER → GOLD GRADIENT  (per-letter background-clip)
+  ═══════════════════════════════════════════════════════════ */
+  const GRAD =
+    'linear-gradient(to right,' +
+    '#a8adb2 0%,#c8cdd2 10%,#e2e6e8 22%,' +
+    '#d4c090 36%,#c89a10 50%,' +
+    '#e8c840 68%,#ffd700 82%,#b8860b 100%)';
+
+  function applyGradients() {
+    const wrap  = document.getElementById('title-wrap');
+    const wRect = wrap.getBoundingClientRect();
+    const VW    = wRect.width;
+    allLetters.forEach(el => {
+      const r      = el.getBoundingClientRect();
+      const offset = r.left - wRect.left;
+      el.style.background           = GRAD;
+      el.style.backgroundSize       = VW + 'px 100%';
+      el.style.backgroundPosition   = '-' + offset + 'px 0';
+      el.style.webkitBackgroundClip = 'text';
+      el.style.backgroundClip       = 'text';
+      el.style.webkitTextFillColor  = 'transparent';
+      el.style.color                = 'transparent';
+    });
+  }
+
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(applyGradients);
+  window.addEventListener('resize', applyGradients);
+
+
+  /* ═══════════════════════════════════════════════════════════
+     3.  PIXEL-SAMPLED PARTICLE SYSTEM
+  ═══════════════════════════════════════════════════════════ */
+  const canvas = document.getElementById('dust-canvas');
+  const ctx    = canvas.getContext('2d');
+  let CW = 0, CH = 0;
+  let particles = [];
+
+  const letterDelay = allLetters.map((_, i) =>
+    (i / allLetters.length) * 0.28 + Math.random() * 0.12
+  );
+
+  function particleColor(pct) {
+    if (pct < 0.30) {
+      const v = 165 + (Math.random() * 70 | 0);
+      return `${v},${v},${v + 8}`;
+    }
+    if (pct < 0.56) {
+      return `${195+(Math.random()*50|0)},${162+(Math.random()*35|0)},${42+(Math.random()*40|0)}`;
+    }
+    return `${210+(Math.random()*42|0)},${140+(Math.random()*50|0)},${Math.random()*22|0}`;
+  }
+
+  function buildParticles() {
+    CW = canvas.width  = window.innerWidth;
+    CH = canvas.height = window.innerHeight;
+    particles = [];
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    allLetters.forEach((el, li) => {
+      const rect = el.getBoundingClientRect();
+      const W = Math.ceil(rect.width);
+      const H = Math.ceil(rect.height);
+      if (W < 2 || H < 2) return;
+
+      const off   = document.createElement('canvas');
+      off.width   = W * dpr;
+      off.height  = H * dpr;
+      const oc    = off.getContext('2d');
+      oc.scale(dpr, dpr);
+      const fs = parseFloat(window.getComputedStyle(el).fontSize);
+      oc.font          = `bold ${fs}px Georgia, "Times New Roman", serif`;
+      oc.textBaseline  = 'middle';
+      oc.textAlign     = 'center';
+      oc.fillStyle     = '#ffffff';
+      oc.fillText(el.textContent, W / 2, H / 2);
+
+      const imgData = oc.getImageData(0, 0, off.width, off.height);
+      const d       = imgData.data;
+      const STEP    = 2;
+      const pct     = (rect.left + rect.width / 2) / CW;
+      const delay   = letterDelay[li];
+
+      for (let py = 0; py < off.height; py += STEP) {
+        for (let px = 0; px < off.width; px += STEP) {
+          const idx = (py * off.width + px) * 4;
+          if (d[idx + 3] < 60) continue;
+
+          const sx = rect.left + px / dpr;
+          const sy = rect.top  + py / dpr;
+          const angle = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.5;
+          const speed = 70 + Math.random() * 260;
+
+          particles.push({
+            ox: sx, oy: sy,
+            dx: Math.cos(angle) * speed,
+            dy: Math.sin(angle) * speed,
+            r:  Math.random() * 1.6 + 0.3,
+            a:  0.75 + Math.random() * 0.25,
+            delay,
+            col: particleColor(pct)
+          });
+        }
+      }
+
+      for (let k = 0; k < 120; k++) {
+        const angle = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.8;
+        const speed = 120 + Math.random() * 320;
+        particles.push({
+          ox:    rect.left + Math.random() * rect.width,
+          oy:    rect.top  + Math.random() * rect.height,
+          dx:    Math.cos(angle) * speed,
+          dy:    Math.sin(angle) * speed,
+          r:     Math.random() * 2.6 + 0.5,
+          a:     0.55 + Math.random() * 0.45,
+          delay: delay + Math.random() * 0.08,
+          col:   particleColor(pct)
+        });
+      }
+    });
+  }
+
+  function drawParticles(p) {
+    ctx.clearRect(0, 0, CW, CH);
+    if (p <= 0 || p >= 1) return;
+
+    for (const pt of particles) {
+      const raw = Math.max(0, (p - pt.delay) / (1 - pt.delay));
+      const t   = raw * raw;
+      const a   = pt.a * t * (1 - p * 1.05);
+      if (a < 0.006) continue;
+
+      ctx.globalAlpha = a;
+      ctx.fillStyle   = `rgb(${pt.col})`;
+      ctx.beginPath();
+      ctx.arc(pt.ox + pt.dx * t, pt.oy + pt.dy * t,
+              Math.max(0.1, pt.r * (1 - t * 0.35)), 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+
+  /* ═══════════════════════════════════════════════════════════
+     4.  PER-LETTER HTML EVAPORATION
+  ═══════════════════════════════════════════════════════════ */
+  function easeIn4(t) { return t * t * t * t; }
+
+  function evaporate(p) {
+    allLetters.forEach((el, i) => {
+      const delay = letterDelay[i];
+      const raw   = Math.max(0, (p - delay) / (1 - delay));
+      const t     = Math.min(1, raw * 1.6);
+      const e     = easeIn4(t);
+
+      el.style.transform = `scale(${Math.max(0.001, 1 - e)})`;
+      el.style.opacity   = String(Math.max(0, 1 - e * 1.3));
+      el.style.filter    = `blur(${e * 9}px)`;
+    });
+
+    const ft = easeIn4(Math.min(1, p * 2.2));
+    const ey = document.querySelector('.t-eyebrow');
+    const tg = document.querySelector('.t-tagline');
+    ey.style.opacity    = String(Math.max(0, 1 - ft * 1.4));
+    ey.style.transform  = `translateY(${-ft * 22}px)`;
+    tg.style.opacity    = String(Math.max(0, 1 - ft * 1.4));
+    tg.style.transform  = `translateY(${ft * 18}px)`;
+  }
+
+
+  /* ═══════════════════════════════════════════════════════════
+     5.  SCROLL DRIVER
+  ═══════════════════════════════════════════════════════════ */
+  const titleWrap = document.getElementById('title-wrap');
+  const caret     = document.getElementById('scroll-caret');
+  let raf = null;
+
+  function onScroll() {
+    const progress = Math.min(1, window.scrollY / (window.innerHeight * 0.72));
+
+    if (raf) cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      titleWrap.style.visibility = progress >= 1 ? 'hidden' : 'visible';
+      caret.style.opacity = String(Math.max(0, 1 - progress * 9));
+      evaporate(progress);
+      drawParticles(progress);
+    });
+  }
+
+  function init() {
+    buildParticles();
+    applyGradients();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', () => { buildParticles(); applyGradients(); });
+    onScroll();
+  }
+
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(init);
+
+
+  /* ═══════════════════════════════════════════════════════════
+     6.  SCROLL-REVEAL
+  ═══════════════════════════════════════════════════════════ */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+
+  /* ═══════════════════════════════════════════════════════════
+     7.  MODAL
+  ═══════════════════════════════════════════════════════════ */
+  const overlay   = document.getElementById('modal-overlay');
+  const openBtn   = document.getElementById('open-modal');
+  const closeBtn  = document.getElementById('modal-close');
+  const cancelBtn = document.getElementById('modal-cancel');
+
+  function openModal() {
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    /* Focus first field for accessibility */
+    setTimeout(() => {
+      const first = overlay.querySelector('input, textarea');
+      if (first) first.focus();
+    }, 50);
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  openBtn.addEventListener('click', openModal);
+  closeBtn.addEventListener('click', closeModal);
+  cancelBtn.addEventListener('click', closeModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && overlay.classList.contains('open')) closeModal(); });
+
+
+  /* ═══════════════════════════════════════════════════════════
+     8.  FILE INPUT — UPDATE LABEL
+  ═══════════════════════════════════════════════════════════ */
+  const fileInput  = document.getElementById('appt-files');
+  const fileCount  = document.getElementById('file-count');
+  const fileLblTxt = document.getElementById('file-label-text');
+
+  fileInput.addEventListener('change', () => {
+    const n = fileInput.files.length;
+    fileCount.textContent = `Attachments (${n})`;
+    if (n === 0) {
+      fileLblTxt.textContent = 'Choose files…';
+    } else if (n === 1) {
+      fileLblTxt.textContent = fileInput.files[0].name;
+    } else {
+      fileLblTxt.textContent = `${n} files selected`;
+    }
+  });
+
+
+  /* ═══════════════════════════════════════════════════════════
+     9.  DATE PICKER — SET MIN TO TODAY
+  ═══════════════════════════════════════════════════════════ */
+  const apptDate = document.getElementById('appt-date');
+  const today    = new Date();
+  const yyyy     = today.getFullYear();
+  const mm       = String(today.getMonth() + 1).padStart(2, '0');
+  const dd       = String(today.getDate()).padStart(2, '0');
+  apptDate.min   = `${yyyy}-${mm}-${dd}`;
+
+
+  /* ═══════════════════════════════════════════════════════════
+     10. FORM SUBMIT HANDLERS (prevent default)
+  ═══════════════════════════════════════════════════════════ */
+  document.getElementById('appt-form').addEventListener('submit', e => e.preventDefault());
+  </script>
+
+</body>
+</html>
